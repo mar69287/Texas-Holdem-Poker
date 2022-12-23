@@ -13,35 +13,39 @@
     />
     <link rel="stylesheet" href="layout.css" />
     <script src="/layout/layout.js" defer></script>
+    <script src="/deck/deck.js"></script>
   </head>
   <body>
     <h1 id="title">Texas Holdem Poker</h1>
+    <div class="board">
 
-    <section id="dealer">
-      <div></div>
-      <div></div>
-    </section>
+      <section class="outer-table">
+        <section class="table">
+          <section id="dealer">
+            <div></div>
+            <div></div>
+          </section>
 
-    <section class="table"></section>
-    <section class="outer-table"></section>
-    <div class="outline"></div>
+          <div class="outline"></div>
 
-    <div class="community-container">
-      <div class="card1"></div>
-      <div class="card2"></div>
-      <div class="card3"></div>
-      <div class="card4"></div>
-      <div class="card5"></div>
-    </div>
+          <div class="community-container">
+            <div class="card1"></div>
+            <div class="card2"></div>
+            <div class="card3"></div>
+            <div class="card4"></div>
+            <div class="card5"></div>
+          </div>
 
-    <section id="player">
-      <div></div>
-      <div></div>
-    </section>
+          <section id="player">
+            <div></div>
+            <div></div>
+          </section>
 
-    <div class="choices">
-      <button>FOLD</button>
-      <button>CHECK</button>
-    </div>
+          <div class="choices">
+            <button>FOLD</button>
+            <button>CHECK</button>
+          </div>
+        </section>
+      </section>
   </body>
 </html>
