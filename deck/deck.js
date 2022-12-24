@@ -1,29 +1,41 @@
 
-//create 52 card deck
-let numDeck = []
-for(let i = 0; i < 8; i++) {
-    numDeck.push(i+2)
+const suits = ['d', 'h', 'c', 's']
+const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03', '02']
+let deck = []
+
+function generateDeck() {
+    suits.forEach(suit => {
+        faces.forEach(face => {
+             deck.push({
+                'face': suit + face,
+            })
+        })
+    })
 }
-numDeck.toString()
-numDeck.push("T","J", "Q", "K", "A");
-const suits = ["S", "D", "H", "C"]
-let fullDeck = []
-numDeck.forEach(function(value) {
-    for(let i = 0; i < 4; i++) {
-        fullDeck.push(value + suits[i])
-    }
-})
 
-console.log(fullDeck)
-
-//shuffle the above 52 card deck
-fullDeck.forEach(function(value, idx) {
-    let placeHolder = fullDeck[idx]
+deck.forEach(function(value, idx) {
+    let placeHolder = deck[idx]
     let int = Math.floor(Math.random() * 52)
-    fullDeck[idx] = fullDeck[int]
-    fullDeck[int] = placeHolder
-    // console.log(holder)
+    deck[idx] = deck[int]
+    deck[int] = placeHolder
+    
 })
-console.log(fullDeck)
+generateDeck()
+console.log(deck)
 
-// Math.floor(Math.random() * 52);
+
+function renderDeck() {
+
+    // for(let i = 0; i < 2; i++) {
+    //     const cardEl = document.createElement('div')
+    //     cardEl.className = 'card ' + deck[i].face
+    //     console.log(cardEl)
+    // }
+
+    deck.forEach(card => {
+        const cardEl = document.createElement('div')
+        cardEl.className = 'card ' + card.face
+        document.querySelector('body').append(cardEl)
+    })
+}
+renderDeck()

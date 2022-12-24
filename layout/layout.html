@@ -4,48 +4,40 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Texas Holdem Poker</title>
+    <title>Texas Hold'em Poker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/card-deck-css/css/cardstarter.css">
     <link rel="stylesheet" href="layout.css" />
     <script src="/layout/layout.js" defer></script>
-    <script src="/deck/deck.js"></script>
+    <!-- <script src="/deck/deck.js"></script> -->
   </head>
   <body>
-    <h1 id="title">Texas Holdem Poker</h1>
+    <h1 id="title">Texas Hold'em Poker</h1>
     <div class="board">
 
       <section class="outer-table">
         <section class="table">
-          <section id="dealer">
-            <div></div>
-            <div></div>
-          </section>
-
+          <section id="dealer"></section>
+    
           <div class="outline"></div>
 
-          <div class="community-container">
-            <div class="card1"></div>
-            <div class="card2"></div>
-            <div class="card3"></div>
-            <div class="card4"></div>
-            <div class="card5"></div>
-          </div>
+          <div class="community-container"></div>
 
-          <section id="player">
-            <div></div>
-            <div></div>
-          </section>
+          <section id="player"></section>
 
-          <div class="choices">
-            <button>FOLD</button>
-            <button>CHECK</button>
-          </div>
         </section>
+
       </section>
+
+      <div class="choices">
+        <button id="fold">FOLD</button>
+        <button id="check">CHECK</button>
+      </div>
+
   </body>
 </html>
