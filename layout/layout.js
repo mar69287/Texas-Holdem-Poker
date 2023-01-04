@@ -2,6 +2,7 @@ const suits = ['d', 'h', 'c', 's']
 const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03', '02']
 const deck = []
 let playerArray = []
+let playerHand = []
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -49,16 +50,6 @@ function renderDeck() {
         cardEl.className = 'card back' 
         document.querySelector('#dealer').append(cardEl)
     }, 2000)
-
-
-    // for(let i = 0; i < 7; i++) {
-    //     setTimeout(function(){
-    //         const cardEl = document.createElement('div')
-    //         cardEl.className = 'card back'  
-    //         document.querySelector('.community-container').append(cardEl)
-    //     }, 2500)
-    // }
-
 
 }
 shuffleDeck()
@@ -166,3 +157,16 @@ foldBtn.addEventListener("click", function(evt) {
     playerArray.splice(0, playerArray.length)
 });
 
+
+function checkStraight(arr) {
+    const result = arr.every(function(value, idx) {
+        if(value === array[0]) {
+          return true
+        } 
+        if(arr[idx-1] - value === 1) {
+          return true
+        } else return false  
+      })
+    console.log(result)
+  }
+  checkStraight(array)
