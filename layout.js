@@ -193,7 +193,7 @@ function checkStraight(array) {
         }
     }
 
-    console.log(array)
+    // console.log(array)
     let result = null;
 
     if (array.length > 4) {
@@ -208,11 +208,10 @@ function checkStraight(array) {
         })
       
     } else result = false
-    console.log("you have a straight: " + result)
+    // console.log("you have a straight: " + result)
     
     if (result) {
-        console.log(array)
-        return result
+        return true
     } else return false
     
 }
@@ -334,33 +333,51 @@ function deleteObjectMultiples() {
     }
 }
 
+function twoThreeFour() {
+    for (const key in tally) {
+        if (tally[key] === 4) {
+        multiple[`${key}`] = tally[key]
+        }
+    }
+
+}
+
 function checkRank() {
     let playerHand = []
     copyPlayerHand()
     // console.log(checkFlush(copyPlayerArray))
-    removeSuits(copyPlayerArray)
-    sortPlayerArray(copyPlayerArray)
-    checkStraight(copyPlayerArray)
+    // removeSuits(copyPlayerArray)
+    // sortPlayerArray(copyPlayerArray)
+    // console.log(checkStraight(copyPlayerArray))
     // copyPlayerHand()
     // removeSuits(copyPlayerArray)
     // sortPlayerArray(copyPlayerArray)
     // console.log(checkMultiples(copyPlayerArray, 4))
-    // console.log(checkMultiples(copyPlayerArray, 3))
-    // console.log(checkMultiples(copyPlayerArray, 2))
-
-
-    // if (checkFlush(copyPlayerArray)) {
-    //     removeSuits(copyPlayerArray)
-    //     sortPlayerArray(copyPlayerArray)
-    //     checkStraight(copyPlayerArray)
-    //     if(copyPlayerArray) {
-    //         if(playerArray[1] === 14) {
-    //             console.log("you have a royal flush")
-    //         } else {
-    //             console.log("you have a straight flush")
-    //         }
-    //     }
-    // }
     
+
+
+    if (checkFlush(copyPlayerArray)) {
+        removeSuits(copyPlayerArray)
+        sortPlayerArray(copyPlayerArray)
+        if(checkStraight(copyPlayerArray)) {
+            if(copyPlayerArray[0] === 14) {
+                console.log("you have a royal flush")
+                player
+            } else {
+                console.log("you have a straight flush")
+            }
+        }
+    }
+
+    // copyPlayerHand()
+    // removeSuits(copyPlayerArray)
+    // sortPlayerArray(copyPlayerArray)
+    // checkMultiples(copyPlayerArray, 4)
+    // if(Object.keys(multiple).length>0) {
+    //     console.log("you have four of a kind")
+    // } else console.log("doesnt work")
+
+    // checkMultiples(copyPlayerArray, 3)
+    // console.log(checkMultiples(copyPlayerArray, 2)
     
 } 
