@@ -4,6 +4,9 @@ const deck = []
 let playerArray = []
 // let playerHand = []
 let multiple = {}
+let multiple4 = {}
+let multiple3 = {}
+let multiple2 = {}
 let copyPlayerArray = []
 let playerRank = []
 
@@ -113,6 +116,7 @@ foldBtn.addEventListener("click", function(evt) {
     renderDeck()
     document.getElementById("check").disabled = false;
     playerArray.splice(0, playerArray.length)
+    deleteObjectMultiples()
 });
 
 function createPlayerArray() {
@@ -128,88 +132,88 @@ function copyPlayerHand() {
     playerArray.forEach(function(val, idx) {
         copyPlayerArray[idx] = val
     })
+    
 }
 
-function checkStraight() {
+function checkStraight(array) {
 
-let size = playerArray.length
+    let size = array.length
 
     if (size === 7) {
-        if (playerArray[3] - playerArray[4] !== 1) {
-            if (playerArray[3] === playerArray[4]) {
-                playerArray.splice(3, 1)
+        if (array[3] - array[4] !== 1) {
+            if (array[3] === array[4]) {
+                array.splice(3, 1)
             }
         } 
-        if (playerArray[2] - playerArray[3] !== 1) {
-            if (playerArray[2] === playerArray[3]) {
-                playerArray.splice(3, 1)
+        if (array[2] - array[3] !== 1) {
+            if (array[2] === array[3]) {
+                array.splice(3, 1)
             }
         }
     }
-    console.log(size)
 
-    if (playerArray.length > 5) {
+    if (array.length > 5) {
   
-        if (playerArray[0] - playerArray[1] !== 1) {
-          if (playerArray[0] === playerArray[1]) {
-                playerArray.splice(0, 1)
-                if (playerArray[0] - playerArray[1] !== 1) {
-                    playerArray.splice(0, 1)
+        if (array[0] - array[1] !== 1) {
+          if (array[0] === array[1]) {
+                array.splice(0, 1)
+                if (array[0] - array[1] !== 1) {
+                    array.splice(0, 1)
                 }
-          }else if (playerArray[1] - playerArray[2] !== 1) {
-                
-               
-                    playerArray.splice(0, 2)
-                
+          }else if (array[1] - array[2] !== 1) {
+                array.splice(0, 2)
           }else {
-                playerArray.splice(0, 1)
+                array.splice(0, 1)
           }        
-        }else if (playerArray[1] - playerArray[2] !== 1) {
-            if (playerArray[1] === playerArray[2]) {
-                playerArray.splice(1, 1)
+        }else if (array[1] - array[2] !== 1) {
+            if (array[1] === array[2]) {
+                array.splice(1, 1)
             }else {
-                playerArray.splice(0, 2)
+                array.splice(0, 2)
             }
         }
 
-        console.log(playerArray)
-        size = playerArray.length
+        size = array.length
 
-        if (playerArray[size-3] - playerArray[size-2] !== 1) {
-            if (playerArray[size-3] === playerArray[size-2]) {
-                if (playerArray[size-2] === playerArray[size-1]) {
-                    playerArray.splice(size-2, 2)
-                }else if (playerArray[size-2] - playerArray[size-1] !== 1) {
-                    playerArray.splice(size-2, 2)
-                }else if (playerArray[size-2] - playerArray[size-1] === 1) {
-                    playerArray.splice(size-2, 1)
+        if (array[size-3] - array[size-2] !== 1) {
+            if (array[size-3] === array[size-2]) {
+                if (array[size-2] === array[size-1]) {
+                    array.splice(size-2, 2)
+                }else if (array[size-2] - array[size-1] !== 1) {
+                    array.splice(size-2, 2)
+                }else if (array[size-2] - array[size-1] === 1) {
+                    array.splice(size-2, 1)
                 }
             } else {
-                playerArray.splice(size-2, 2)
+                array.splice(size-2, 2)
             }
         }
-        if (playerArray[size-2] - playerArray[size-1] !== 1) {
-            playerArray.splice(size-1, 1)
+        if (array[size-2] - array[size-1] !== 1) {
+            array.splice(size-1, 1)
         }
     }
 
-    console.log(playerArray)
+    console.log(array)
     let result = null;
 
-    if (playerArray.length > 4) {
+    if (array.length > 4) {
       
-       result = playerArray.every(function(value, idx) {
-            if(value === playerArray[0]) {
+       result = array.every(function(value, idx) {
+            if(value === array[0]) {
               return true
             } 
-            if(playerArray[idx-1] - value === 1) {
+            if(array[idx-1] - value === 1) {
               return true
             } else return false  
         })
       
     } else result = false
     console.log("you have a straight: " + result)
-    return result
+    
+    if (result) {
+        console.log(array)
+        return result
+    } else return false
     
 }
 
@@ -226,10 +230,6 @@ function checkFlush(array) {
             if (spadeCounter >= 5) {
                 const playerHand = array.filter(function(spade) { return spade.includes("s")})
                 console.log(playerHand)
-                // array.splice(0,array.length)
-                // for(i = 0; i < playerHand; i++) {
-                //     array[i] = playerHand[i]
-                // }
                 return true
             }
         }
@@ -240,10 +240,6 @@ function checkFlush(array) {
             if (clubCounter >= 5) {
                 const playerHand = array.filter(function(club) { return club.includes("c")})
                 console.log(playerHand)
-                // array.splice(0,array.length)
-                // for(i = 0; i < playerHand; i++) {
-                //     array[i] = playerHand[i]
-                // }
                 return true
             }
         }
@@ -254,10 +250,6 @@ function checkFlush(array) {
             if (heartCounter >= 5) {
                 const playerHand = array.filter(function(heart) { return heart.includes("h")})
                 console.log(playerHand)
-                // array.splice(0,array.length)
-                // for(i = 0; i < playerHand; i++) {
-                //     array[i] = playerHand[i]
-                // }
                 return true
             }
         }    
@@ -269,11 +261,6 @@ function checkFlush(array) {
             if (diamondCounter >= 5) {
                 const playerHand = array.filter(function(diamond) { return diamond.includes("d")})
                 console.log(playerHand)
-                // array.splice(0,array.length)
-                // console.log(playerHand)
-                // for(i = 0; i < playerHand; i++) {
-                //     array[i] = playerHand[i]
-                // }
                 return true
             }     
         }   
@@ -281,72 +268,99 @@ function checkFlush(array) {
     return false
 }
 
-function removeSuits() {
-    playerArray.forEach(function(value,idx) {
-        playerArray[idx] = value.substring(1, playerArray.length)
+function removeSuits(array) {
+    array.forEach(function(value,idx) {
+        array[idx] = value.substring(1, array.length)
     })
-    console.log(playerArray)
 }
 
-function sortPlayerArray() {
-    playerArray.forEach(function(value, idx) {
+function sortPlayerArray(array) {
+    array.forEach(function(value, idx) {
         if (isNaN(value) !== true) {
-          playerArray[idx] = parseInt(value, 10)
+          array[idx] = parseInt(value, 10)
         }
-        if (playerArray[idx] === "J") {
-          playerArray[idx] = 11
+        if (array[idx] === "J") {
+          array[idx] = 11
         }
-        if (playerArray[idx] === "Q") {
-          playerArray[idx] = 12
+        if (array[idx] === "Q") {
+          array[idx] = 12
         }
-        if (playerArray[idx] === "K") {
-          playerArray[idx] = 13
+        if (array[idx] === "K") {
+          array[idx] = 13
         }
-        if (playerArray[idx] === "A") {
-          playerArray[idx] = 14
+        if (array[idx] === "A") {
+          array[idx] = 14
         }
     })
 
-    playerArray.sort(function(a, b) { return b - a })
-    console.log(playerArray)
+    array.sort(function(a, b) { return b - a })
+    console.log(array)
 }
 
-function checkMultiples(val) {
-    const tally = playerArray.reduce((value, vote) => {
+function checkMultiples(array, val) {
+let result = null;
+
+    const tally = array.reduce((value, vote) => {
         value[vote] = value[vote] ? value[vote] + 1 : 1;
         return value;
     }, {});  
-      
-    console.log(tally)
 
     for (const key in tally) {
         if (tally[key] === val) {
         multiple[`${key}`] = tally[key]
         }
     }
-    console.log(multiple)
-    if(Object.keys(tally).length > 0) {
-        return true
+
+    if(Object.keys(multiple).length > 0) {
+        for (const key in multiple) {
+            if (multiple[key] === val) {
+                result =  true
+            }
+        }
     } else {
-        return false
+        result = false
+    }
+
+    if (result) {
+        return multiple
+    } else return false
+}
+
+function deleteObjectMultiples() {
+    if(Object.keys(multiple).length > 0) {
+        for (const key in multiple) {
+            delete multiple[key]
+        }
     }
 }
 
 function checkRank() {
     let playerHand = []
     copyPlayerHand()
-    console.log(checkFlush(copyPlayerArray))
-    console.log("this is the " + playerHand)
-    if (checkFlush(copyPlayerArray)) {
-        removeSuits()
-        if(checkStraight(copyPlayerArray)) {
-            if(playerArray[1] === 14) {
-                console.log("you have a royal flush")
-            } else {
-                console.log("you have a straight flush")
-            }
-        }else {
-            console.log("you have a flush")
-        }
-    }
+    // console.log(checkFlush(copyPlayerArray))
+    removeSuits(copyPlayerArray)
+    sortPlayerArray(copyPlayerArray)
+    checkStraight(copyPlayerArray)
+    // copyPlayerHand()
+    // removeSuits(copyPlayerArray)
+    // sortPlayerArray(copyPlayerArray)
+    // console.log(checkMultiples(copyPlayerArray, 4))
+    // console.log(checkMultiples(copyPlayerArray, 3))
+    // console.log(checkMultiples(copyPlayerArray, 2))
+
+
+    // if (checkFlush(copyPlayerArray)) {
+    //     removeSuits(copyPlayerArray)
+    //     sortPlayerArray(copyPlayerArray)
+    //     checkStraight(copyPlayerArray)
+    //     if(copyPlayerArray) {
+    //         if(playerArray[1] === 14) {
+    //             console.log("you have a royal flush")
+    //         } else {
+    //             console.log("you have a straight flush")
+    //         }
+    //     }
+    // }
+    
+    
 } 
