@@ -2,8 +2,10 @@ const suits = ['d', 'h', 'c', 's']
 const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03', '02']
 const deck = []
 let playerArray = []
-let playerHand = []
+// let playerHand = []
 let multiple = {}
+let copyPlayerArray = []
+let playerRank = []
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -90,11 +92,12 @@ renderDeck()
             }
 
             createPlayerArray()
+            checkRank()
             //console.log(checkFlush())
-            removeSuits()
-            sortPlayerArray()
+            // removeSuits()
+            // sortPlayerArray()
             //console.log(checkStraight())
-            checkMultiples()
+            // checkMultiples()
         }
 
     });
@@ -121,7 +124,14 @@ function createPlayerArray() {
     console.log(playerArray)
 }
 
-function checkStraight() {    
+function copyPlayerHand() {
+    playerArray.forEach(function(val, idx) {
+        copyPlayerArray[idx] = val
+    })
+}
+
+function checkStraight() {
+
 let size = playerArray.length
 
     if (size === 7) {
@@ -199,50 +209,71 @@ let size = playerArray.length
       
     } else result = false
     console.log("you have a straight: " + result)
+    return result
     
 }
 
-function checkFlush() {
+function checkFlush(array) {
+    
     let spadeCounter = 0;
     let clubCounter = 0;
     let heartCounter = 0;
     let diamondCounter = 0;
+
     for (let i = 0; i < 7; i++) {
-        if (playerArray[i].includes("s")) {
+        if (array[i].includes("s")) {
             spadeCounter++
-        }
             if (spadeCounter >= 5) {
-                const playerHand = playerArray.filter(function(spade) { return spade.includes("s")})
+                const playerHand = array.filter(function(spade) { return spade.includes("s")})
                 console.log(playerHand)
+                // array.splice(0,array.length)
+                // for(i = 0; i < playerHand; i++) {
+                //     array[i] = playerHand[i]
+                // }
                 return true
             }
+        }
     }
     for (let i = 0; i < 7; i++) {
-        if (playerArray[i].includes("c")) {
+        if (array[i].includes("c")) {
             clubCounter++
             if (clubCounter >= 5) {
-                const playerHand = playerArray.filter(function(club) { return club.includes("c")})
+                const playerHand = array.filter(function(club) { return club.includes("c")})
                 console.log(playerHand)
+                // array.splice(0,array.length)
+                // for(i = 0; i < playerHand; i++) {
+                //     array[i] = playerHand[i]
+                // }
                 return true
             }
         }
     }
     for (let i = 0; i < 7; i++) {
-        if (playerArray[i].includes("h")) {
+        if (array[i].includes("h")) {
             heartCounter++
             if (heartCounter >= 5) {
-                const playerHand = playerArray.filter(function(heart) { return heart.includes("h")})
+                const playerHand = array.filter(function(heart) { return heart.includes("h")})
                 console.log(playerHand)
+                // array.splice(0,array.length)
+                // for(i = 0; i < playerHand; i++) {
+                //     array[i] = playerHand[i]
+                // }
                 return true
             }
         }    
     }
+
     for (let i = 0; i < 7; i++) {
-        if (playerArray[i].includes("d")) {
+        if (array[i].includes("d")) {
             diamondCounter++
             if (diamondCounter >= 5) {
-                const playerHand = playerArray.filter(function(diamond) { return diamond.includes("d")})
+                const playerHand = array.filter(function(diamond) { return diamond.includes("d")})
                 console.log(playerHand)
+                // array.splice(0,array.length)
+                // console.log(playerHand)
+                // for(i = 0; i < playerHand; i++) {
+                //     array[i] = playerHand[i]
+                // }
                 return true
             }     
         }   
@@ -280,7 +311,7 @@ function sortPlayerArray() {
     console.log(playerArray)
 }
 
-function checkMultiples() {
+function checkMultiples(val) {
     const tally = playerArray.reduce((value, vote) => {
         value[vote] = value[vote] ? value[vote] + 1 : 1;
         return value;
@@ -289,13 +320,33 @@ function checkMultiples() {
     console.log(tally)
 
     for (const key in tally) {
-        if (tally[key] === 3) {
+        if (tally[key] === val) {
         multiple[`${key}`] = tally[key]
         }
     }
     console.log(multiple)
+    if(Object.keys(tally).length > 0) {
+        return true
+    } else {
+        return false
+    }
 }
 
-function checkRank () {
-    
-}
+function checkRank() {
+    let playerHand = []
+    copyPlayerHand()
+    console.log(checkFlush(copyPlayerArray))
+    console.log("this is the " + playerHand)
+    if (checkFlush(copyPlayerArray)) {
+        removeSuits()
+        if(checkStraight(copyPlayerArray)) {
+            if(playerArray[1] === 14) {
+                console.log("you have a royal flush")
+            } else {
+                console.log("you have a straight flush")
+            }
+        }else {
+            console.log("you have a flush")
+        }
+    }
+} 
