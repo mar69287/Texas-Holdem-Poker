@@ -3,6 +3,7 @@ const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03
 const deck = []
 let playerArray = []
 let playerHand = []
+let multiple = {}
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -93,6 +94,7 @@ renderDeck()
             removeSuits()
             sortPlayerArray()
             //console.log(checkStraight())
+            checkMultiples()
         }
 
     });
@@ -119,7 +121,7 @@ function createPlayerArray() {
     console.log(playerArray)
 }
 
-function checkStraight() {
+function checkStraight() {    
 let size = playerArray.length
 
     if (size === 7) {
@@ -278,6 +280,22 @@ function sortPlayerArray() {
     console.log(playerArray)
 }
 
-function checkFourKind() {
+function checkMultiples() {
+    const tally = playerArray.reduce((value, vote) => {
+        value[vote] = value[vote] ? value[vote] + 1 : 1;
+        return value;
+    }, {});  
+      
+    console.log(tally)
+
+    for (const key in tally) {
+        if (tally[key] === 3) {
+        multiple[`${key}`] = tally[key]
+        }
+    }
+    console.log(multiple)
+}
+
+function checkRank () {
     
 }
