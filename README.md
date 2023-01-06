@@ -1,3 +1,4 @@
 # Texas-Holdem-Poker!
 This is an impletation for the game Texas Hold'em card game. Which is just another variation of poker. 
-[image](https://user-images.githubusercontent.com/104735283/210904812-26df22b8-6f73-4c5b-83a3-7993bd11ef14.png)
+
+![image](https://user-images.githubusercontent.com/104735283/210905344-eb8bb90f-1ae1-40f5-982c-df4345ad3e8d.png)
