@@ -17,6 +17,7 @@ https://mar69287.github.io/Texas-Holdem-Poker/
 
 ![image](https://user-images.githubusercontent.com/104735283/210909471-baa1e3d8-ca76-4765-8000-e3523e34d349.png)
 
+## End of Game
 ![image](https://user-images.githubusercontent.com/104735283/211057305-d8f7089f-4aa5-4938-8b4c-0e3d5cea24dc.png)
 
 ## Next Steps
