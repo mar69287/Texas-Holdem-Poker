@@ -236,7 +236,8 @@ function checkFlush(array) {
         if (array[i].includes("s")) {
             spadeCounter++
             if (spadeCounter >= 5) {
-                array.filter(function(spade) { return spade.includes("s")})
+                const playerHand = array.filter(function(spade) { return spade.includes("s")})
+                // console.log(playerHand)
                 return true
             }
         }
@@ -245,7 +246,8 @@ function checkFlush(array) {
         if (array[i].includes("c")) {
             clubCounter++
             if (clubCounter >= 5) {
-                array.filter(function(club) { return club.includes("c")})
+                const playerHand = array.filter(function(club) { return club.includes("c")})
+                // console.log(playerHand)
                 return true
             }
         }
@@ -254,7 +256,8 @@ function checkFlush(array) {
         if (array[i].includes("h")) {
             heartCounter++
             if (heartCounter >= 5) {
-                array.filter(function(heart) { return heart.includes("h")})
+                const playerHand = array.filter(function(heart) { return heart.includes("h")})
+                // console.log(playerHand)
                 return true
             }
         }    
@@ -264,7 +267,8 @@ function checkFlush(array) {
         if (array[i].includes("d")) {
             diamondCounter++
             if (diamondCounter >= 5) {
-                array.filter(function(diamond) { return diamond.includes("d")})
+                const playerHand = array.filter(function(diamond) { return diamond.includes("d")})
+                // console.log(playerHand)
                 return true
             }     
         }   
@@ -495,8 +499,10 @@ function checkPlayerRank(checkArray) {
         sortPlayerArray(copyPlayerArray)
         if(checkStraight(copyPlayerArray)) {
             if(copyPlayerArray[0] === 14) {
+                // playerRank.push(1)
                 playerRankObject["Royal Flush"] = 1
             } else {
+                // playerRank.push(2)
                 playerRankObject["Straight Flush"] = 2
             }
         }
@@ -511,11 +517,12 @@ function checkPlayerRank(checkArray) {
     twoThreeFour()
     
     if(Object.keys(multiple4).length>0) {
-
+        // playerRank.push(3)
         playerRankObject["Four of a Kind"] = 3
     } 
 
     if(Object.keys(multiple3).length>1) {
+        // playerRank.push(4)
         playerRankObject["Full House"] = 4
     } else if((Object.keys(multiple3).length>0) && (Object.keys(multiple2).length>0)) {
         playerRankObject["Full House"] = 4
@@ -523,24 +530,30 @@ function checkPlayerRank(checkArray) {
 
     copyPlayerHand(checkArray)
     if(checkFlush(copyPlayerArray)) {
+        // playerRank.push(5)
         playerRankObject["Flush"] = 5
     }
 
     removeSuits(copyPlayerArray)
     sortPlayerArray(copyPlayerArray)
     if(checkStraight(copyPlayerArray)) {
+        // playerRank.push(6)
         playerRankObject["Straight"] = 6
     }
 
     if(Object.keys(multiple3).length>0) {
+        // playerRank.push(7)
         playerRankObject["Three of a Kind"] = 7
     } 
 
     if(Object.keys(multiple2).length>1) {
+        // playerRank.push(8)
         playerRankObject["Two Pair"] = 8
     } else if(Object.keys(multiple2).length === 1) {
+        // playerRank.push(9)
         playerRankObject["Pair"] = 9
     } else {
+        // playerRank.push(10)
         playerRankObject["High Card"] = 10
     }
 }
