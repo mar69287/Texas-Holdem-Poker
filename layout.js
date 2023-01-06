@@ -2,13 +2,17 @@ const suits = ['d', 'h', 'c', 's']
 const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03', '02']
 const deck = []
 let playerArray = []
+let copyPlayerArray = []
+let dealerArray = []
+let copyDealerArray = []
 let multiple = {}
 let multiple4 = {}
 let multiple3 = {}
 let multiple2 = {}
-let copyPlayerArray = []
 let playerRank = []
 let playerRankObject = {}
+let playerObjectCopy = {}
+let winnerResult = false
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -94,13 +98,13 @@ renderDeck()
                 })
             }
 
-            createPlayerArray()
-            checkRank()
-            //console.log(checkFlush())
-            // removeSuits()
-            // sortPlayerArray()
-            //console.log(checkStraight())
-            // checkMultiples()
+            createPlayerArray(playerArray, 0, 2)
+            checkPlayerRank(playerArray)
+            copyRank(playerRankObject)
+            reset()
+            createPlayerArray(dealerArray, 1, 3)
+            checkPlayerRank(dealerArray)
+            checkWinner(playerObjectCopy, playerRankObject)
         }
 
     });
@@ -108,6 +112,10 @@ renderDeck()
 
 const foldBtn = document.getElementById("fold")
 foldBtn.addEventListener("click", function(evt) {
+    if(winnerResult === true) {
+        document.getElementById("winner").style.zIndex = "-2"
+        winnerResult = false
+    }
     counter = 0
     faceVal = 1
     const cards = document.querySelectorAll(".card") 
@@ -116,20 +124,24 @@ foldBtn.addEventListener("click", function(evt) {
     renderDeck()
     document.getElementById("check").disabled = false;
     playerArray.splice(0, playerArray.length)
+    dealerArray.splice(0, dealerArray.length)
+    for (const key in playerObjectCopy) {
+        delete playerObjectCopy[key]
+    }
     reset()
 });
 
-function createPlayerArray() {
-    playerArray.push(deck[0].face)
-    playerArray.push(deck[2].face)
+function createPlayerArray(array, val1, val2) {
+    array.push(deck[val1].face)
+    array.push(deck[val2].face)
     for (let i = 4; i < 9; i++) {
-        playerArray.push(deck[i].face)
+        array.push(deck[i].face)
     }
-    console.log(playerArray)
 }
 
-function copyPlayerHand() {
-    playerArray.forEach(function(val, idx) {
+
+function copyPlayerHand(array) {
+    array.forEach(function(val, idx) {
         copyPlayerArray[idx] = val
     })
     
@@ -193,7 +205,6 @@ function checkStraight(array) {
         }
     }
 
-    // console.log(array)
     let result = null;
 
     if (array.length > 4) {
@@ -208,7 +219,6 @@ function checkStraight(array) {
         })
       
     } else result = false
-    // console.log("you have a straight: " + result)
     
     if (result) {
         return true
@@ -324,6 +334,12 @@ let result = null;
     } else return false
 }
 
+function copyRank(obj) {
+    for (const key in obj) {
+        playerObjectCopy[`${key}`] = obj[key]
+    }
+}
+
 function reset() {
     if(Object.keys(multiple).length > 0) {
         for (const key in multiple) {
@@ -375,27 +391,25 @@ function twoThreeFour() {
 
 }
 
-function checkRank() {
+function checkPlayerRank(checkArray) {
     let playerHand = []
-    copyPlayerHand()
+    copyPlayerHand(checkArray)
 
     if (checkFlush(copyPlayerArray)) {
         removeSuits(copyPlayerArray)
         sortPlayerArray(copyPlayerArray)
         if(checkStraight(copyPlayerArray)) {
             if(copyPlayerArray[0] === 14) {
-                console.log("you have a royal flush")
                 playerRank.push(1)
                 playerRankObject["Royal Flush"] = 1
             } else {
-                console.log("you have a straight flush")
                 playerRank.push(2)
                 playerRankObject["Straight Flush"] = 2
             }
         }
     }
 
-    copyPlayerHand()
+    copyPlayerHand(checkArray)
     removeSuits(copyPlayerArray)
     sortPlayerArray(copyPlayerArray)
     checkMultiples(copyPlayerArray, 4)
@@ -404,22 +418,19 @@ function checkRank() {
     twoThreeFour()
     
     if(Object.keys(multiple4).length>0) {
-        console.log("you have four of a kind")
         playerRank.push(3)
         playerRankObject["Four of a Kind"] = 3
     } 
 
     if(Object.keys(multiple3).length>1) {
-        console.log("you have full house")
         playerRank.push(4)
         playerRankObject["Full House"] = 4
     } else if((Object.keys(multiple3).length>0) && (Object.keys(multiple2).length>0)) {
         playerRankObject["Full House"] = 4
     }
 
-    copyPlayerHand()
+    copyPlayerHand(checkArray)
     if(checkFlush(copyPlayerArray)) {
-        console.log("you have a flush")
         playerRank.push(5)
         playerRankObject["Flush"] = 5
     }
@@ -427,29 +438,40 @@ function checkRank() {
     removeSuits(copyPlayerArray)
     sortPlayerArray(copyPlayerArray)
     if(checkStraight(copyPlayerArray)) {
-        console.log("you have a straight")
         playerRank.push(6)
         playerRankObject["Straight"] = 6
     }
 
     if(Object.keys(multiple3).length>0) {
-        console.log("you have three of a kind")
         playerRank.push(7)
         playerRankObject["Three of a Kind"] = 7
     } 
 
     if(Object.keys(multiple2).length>1) {
-        console.log("you have a two pair")
         playerRank.push(8)
         playerRankObject["Two Pair"] = 8
-    } else if(Object.keys(multiple2).length=1) {
-        console.log("you have a pair")
+    } else if(Object.keys(multiple2).length === 1) {
         playerRank.push(9)
         playerRankObject["Pair"] = 9
     } else {
-        console.log("you have a high card")
         playerRank.push(10)
         playerRankObject["High Card"] = 10
     }
-} 
+}
 
+function checkWinner(playerObj, dealerObj) {
+    const playerRank = Object.keys(playerObj)[0]
+    const dealerRank = Object.keys(dealerObj)[0]
+    winnerResult = true
+    const div = document.getElementById("winner")
+    div.style.zIndex = "5";
+
+    if(Object.values(playerObj)[0] < Object.values(dealerObj)[0]) {
+        div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+    } else if(Object.values(playerObj)[0] > Object.values(dealerObj)[0]) {
+        div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+    } else if(Object.values(playerObj)[0] === Object.values(dealerObj)[0]) {
+        div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+    }
+    
+}

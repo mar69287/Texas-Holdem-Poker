@@ -88,6 +88,27 @@ body {
     margin: auto;
 }
 
+#winner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: -2;
+    /* left: 0; */
+    right: 350px;
+    top: 130px;
+    /* bottom: 0; */
+    width: 25%;
+    height: 25%;
+    border-radius: 30px;
+    border: lightsalmon solid 5px;
+    background-color: rgb(128, 153, 155);
+    margin: auto;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+}
+
 .community-container > div {
     width: 13%;
     height: 85%;
@@ -167,4 +188,4 @@ body {
 
 .choices > button:last-child {
     background-color: rgb(213, 179, 11);
-} 
+}
