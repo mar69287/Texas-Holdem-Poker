@@ -560,19 +560,19 @@ function checkWinner(playerObj, dealerObj) {
         div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
     } else if(Object.values(playerObj)[0] === Object.values(dealerObj)[0]) {
         div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
-        console.log(playerObj) //hand ranks
-        console.log(dealerObj)
-        console.log(playerMultiple2)
-        console.log(dealerMultiple2)
+        // console.log(playerObj) //hand ranks
+        // console.log(dealerObj)
+        // console.log(playerMultiple2)
+        // console.log(dealerMultiple2)
         tiebreaker(playerObj, dealerObj)
     }
     
 }
 
 function tiebreaker(playerObj, dealerObj) {
-    console.log(playerMultiple)
-    console.log(dealerMultiple)
-    console.log(playerArray)
+    // console.log(playerMultiple)
+    // console.log(dealerMultiple)
+    // console.log(playerArray)
     const div = document.getElementById("winner")
     const playerRank = Object.keys(playerObj)[0]
     const dealerRank = Object.keys(dealerObj)[0]
