@@ -9,8 +9,10 @@ Use the link below to try the game out for yourself!
 https://mar69287.github.io/Texas-Holdem-Poker/
 
 ### Tehcnologies Used
-1. Javascript ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-2. HTML ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-3. CSS ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 
 ![image](https://user-images.githubusercontent.com/104735283/210905344-eb8bb90f-1ae1-40f5-982c-df4345ad3e8d.png)
+
+![image](https://user-images.githubusercontent.com/104735283/210909471-baa1e3d8-ca76-4765-8000-e3523e34d349.png)
