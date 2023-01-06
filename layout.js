@@ -8,6 +8,79 @@ let playerMultiple = {}; let playerMultiple2 = {}; let playerMultiple3 = {}; let
 let dealerMultiple = {}; let dealerMultiple2 = {}; let dealerMultiple3 = {}; let dealerMultiple4 = {}
 let playerRankObject = {}; let playerObjectCopy = {}
 let winnerResult = false
+let faceVal = 1
+let counter = 0
+
+generateDeck()
+shuffleDeck()
+renderDeck()
+
+const checkBtn = document.getElementById("check")
+checkBtn.addEventListener("click", function(evt) {
+    counter++
+
+    if(counter===1) {
+        for(let i = 4; i < 7; i++) {
+            const cardEl = document.createElement('div')
+            cardEl.className = 'card ' +  deck[i].face 
+            document.querySelector('.community-container').append(cardEl)
+        }
+    }
+    
+    if((counter > 1) && (counter < 4)) {
+        const cardEl = document.createElement('div')
+        cardEl.className = 'card ' + deck[counter + 5].face
+        document.querySelector('.community-container').append(cardEl)
+    }
+
+    if(counter === 4) {
+        document.getElementById("check").disabled = true;
+        counter = 0
+        for(i = 0; i < 2; i++) {
+            const cards = document.querySelectorAll(".back") 
+            cards.forEach(function(card) {
+            card.classList.remove("back")
+            card.classList.add(deck[i + faceVal].face)
+            faceVal = 3
+            })
+        }
+
+        createPlayerArray(playerArray, 0, 2)
+        checkPlayerRank(playerArray)
+        copyRank(playerRankObject)
+        copyPlayerMultiples()
+        reset()
+        createPlayerArray(dealerArray, 1, 3)
+        checkPlayerRank(dealerArray)
+        copydealerMultiples()
+        checkWinner(playerObjectCopy, playerRankObject)
+    }
+
+});
+
+
+const foldBtn = document.getElementById("fold")
+foldBtn.addEventListener("click", function(evt) {
+    if(winnerResult === true) {
+        document.getElementById("winner").style.zIndex = "-2"
+        winnerResult = false
+    }
+    counter = 0
+    faceVal = 1
+    const cards = document.querySelectorAll(".card") 
+    cards.forEach(card => card.remove())
+    shuffleDeck()
+    renderDeck()
+    document.getElementById("check").disabled = false;
+    playerArray.splice(0, playerArray.length)
+    dealerArray.splice(0, dealerArray.length)
+    for (const key in playerObjectCopy) {
+        delete playerObjectCopy[key]
+    }
+    reset()
+    deletePlayerMultiples()
+    deleteDealerMultiples()
+});
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -18,7 +91,7 @@ function generateDeck() {
         })
     })
 }
-generateDeck()
+
 function shuffleDeck() {
     deck.forEach(function(value, idx) {
         let placeHolder = deck[idx]
@@ -28,7 +101,6 @@ function shuffleDeck() {
         
     }) 
 }
-
 
 function renderDeck() {
     
@@ -59,78 +131,6 @@ function renderDeck() {
     }, 1500)
 
 }
-shuffleDeck()
-renderDeck()
-
-
-    let faceVal = 1
-    let counter = 0
-    const checkBtn = document.getElementById("check")
-    checkBtn.addEventListener("click", function(evt) {
-        counter++
-
-        if(counter===1) {
-            for(let i = 4; i < 7; i++) {
-                const cardEl = document.createElement('div')
-                cardEl.className = 'card ' +  deck[i].face 
-                document.querySelector('.community-container').append(cardEl)
-            }
-        }
-        
-        if((counter > 1) && (counter < 4)) {
-            const cardEl = document.createElement('div')
-            cardEl.className = 'card ' + deck[counter + 5].face
-            document.querySelector('.community-container').append(cardEl)
-        }
-
-        if(counter === 4) {
-            document.getElementById("check").disabled = true;
-            counter = 0
-            for(i = 0; i < 2; i++) {
-                const cards = document.querySelectorAll(".back") 
-                cards.forEach(function(card) {
-                card.classList.remove("back")
-                card.classList.add(deck[i + faceVal].face)
-                faceVal = 3
-                })
-            }
-
-            createPlayerArray(playerArray, 0, 2)
-            checkPlayerRank(playerArray)
-            copyRank(playerRankObject)
-            copyPlayerMultiples()
-            reset()
-            createPlayerArray(dealerArray, 1, 3)
-            checkPlayerRank(dealerArray)
-            copydealerMultiples()
-            checkWinner(playerObjectCopy, playerRankObject)
-        }
-
-    });
-
-
-const foldBtn = document.getElementById("fold")
-foldBtn.addEventListener("click", function(evt) {
-    if(winnerResult === true) {
-        document.getElementById("winner").style.zIndex = "-2"
-        winnerResult = false
-    }
-    counter = 0
-    faceVal = 1
-    const cards = document.querySelectorAll(".card") 
-    cards.forEach(card => card.remove())
-    shuffleDeck()
-    renderDeck()
-    document.getElementById("check").disabled = false;
-    playerArray.splice(0, playerArray.length)
-    dealerArray.splice(0, dealerArray.length)
-    for (const key in playerObjectCopy) {
-        delete playerObjectCopy[key]
-    }
-    reset()
-    deletePlayerMultiples()
-    deleteDealerMultiples()
-});
 
 function createPlayerArray(array, val1, val2) {
     array.push(deck[val1].face)
@@ -560,19 +560,13 @@ function checkWinner(playerObj, dealerObj) {
         div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
     } else if(Object.values(playerObj)[0] === Object.values(dealerObj)[0]) {
         div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
-        // console.log(playerObj) //hand ranks
-        // console.log(dealerObj)
-        // console.log(playerMultiple2)
-        // console.log(dealerMultiple2)
         tiebreaker(playerObj, dealerObj)
     }
     
 }
 
 function tiebreaker(playerObj, dealerObj) {
-    // console.log(playerMultiple)
-    // console.log(dealerMultiple)
-    // console.log(playerArray)
+
     const div = document.getElementById("winner")
     const playerRank = Object.keys(playerObj)[0]
     const dealerRank = Object.keys(dealerObj)[0]
@@ -642,7 +636,7 @@ function tiebreaker(playerObj, dealerObj) {
         }else if(playerHigh < dealerHigh) {
             return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater pair`
         }else {
-            if (playerHigh2 > dealerHigh2) {
+            if (playerHigh2 > dealerHigh2) {s
                 return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater 2nd Pair`
             }else  if (playerHigh2 < dealerHigh2) {
                 return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater 2nd Pair`
