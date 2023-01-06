@@ -38,10 +38,12 @@ function renderDeck() {
         document.querySelector("#player").append(cardEl)
     }, 300)
 
+    
     setTimeout(function() {
         const cardEl = document.createElement('div')
         cardEl.className = 'card back'
         document.querySelector('#dealer').append(cardEl)
+        
     }, 600)
 
     setTimeout(function() {
