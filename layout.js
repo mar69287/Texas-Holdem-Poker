@@ -491,10 +491,10 @@ function checkPlayerRank(checkArray) {
     copyPlayerHand(checkArray)
 
     if (checkFlush(copyPlayerArray)) {
-        removeSuits(copyPlayerArray)
-        sortPlayerArray(copyPlayerArray)
-        if(checkStraight(copyPlayerArray)) {
-            if(copyPlayerArray[0] === 14) {
+        removeSuits(playerHand)
+        sortPlayerArray(playerHand)
+        if(checkStraight(playerHand)) {
+            if(playerHand[0] === 14) {
                 playerRankObject["Royal Flush"] = 1
             } else {
                 playerRankObject["Straight Flush"] = 2
@@ -629,5 +629,24 @@ function tiebreaker(playerObj, dealerObj) {
             return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Higher pair`
         }
     }
+    else if(Object.values(playerObj)[0] === 8) {
+        const playerHigh = parseInt(Object.keys(playerMultiple2).pop(), 10)
+        const dealerHigh = parseInt(Object.keys(dealerMultiple2).pop(), 10)
+        const playerHigh2 = parseInt(Object.keys(playerMultiple2)[dealerMultiple2.length-2], 10)
+        const dealerHigh2 = parseInt(Object.keys(dealerMultiple2)[dealerMultiple2.length-2], 10)
+        
+        if(playerHigh > dealerHigh) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Pairs`
+        }else if(playerHigh < dealerHigh) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater pair`
+        }else {
+            if (playerHigh2 > dealerHigh2) {
+                return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater 2nd Pair`
+            }else  if (playerHigh2 < dealerHigh2) {
+                return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater 2nd Pair`
+            }
+        }
+         
+     }
 
 }
