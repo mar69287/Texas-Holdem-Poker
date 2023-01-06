@@ -1,4 +1,4 @@
-# Texas-Holdem-Poker
+# Texas Hold'em Poker
 This is an impletation for the game Texas Hold'em card game. Which is just another variation of poker. It involves you versus the dealer. Who ever has the higher ranking hand wins!
 
 ## Quick Start
