@@ -22,4 +22,5 @@ https://mar69287.github.io/Texas-Holdem-Poker/
 ## Next Steps
 * Finish tiebreaker for all ranks
 * Add bank and player betting
+* Organize code
 * Using classes 
