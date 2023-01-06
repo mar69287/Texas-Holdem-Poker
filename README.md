@@ -5,7 +5,7 @@ This is an impletation for the game Texas Hold'em card game. Which is just anoth
 Game begins with two cards being handed out to player and dealer respectively. Players cards faced up while dealers cards will be faced down. If player decided to proceed with given hand, player may click the "check" button to display first three community cards. New community cards will be placed for each time the check button is pressed for a total max of 5 to be displayed. Using your own two cards plus the five community cards displayed, game will determine who can make the best five hand possible. To reset the game, just click "fold."
 
 ## Play
-Use the link below to try the game out for yourself!
+Use the link below to try the game out for yourself! <br>
 https://mar69287.github.io/Texas-Holdem-Poker/
 
 ### Tehcnologies Used
