@@ -2,13 +2,13 @@ const suits = ['d', 'h', 'c', 's']
 const faces = ['A', 'K', 'Q', 'J', '10', '09', '08', '07', '06', '05', '04', '03', '02']
 const deck = []
 let playerArray = []
-// let playerHand = []
 let multiple = {}
 let multiple4 = {}
 let multiple3 = {}
 let multiple2 = {}
 let copyPlayerArray = []
 let playerRank = []
+let playerRankObject = {}
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -116,7 +116,7 @@ foldBtn.addEventListener("click", function(evt) {
     renderDeck()
     document.getElementById("check").disabled = false;
     playerArray.splice(0, playerArray.length)
-    deleteObjectMultiples()
+    reset()
 });
 
 function createPlayerArray() {
@@ -293,7 +293,6 @@ function sortPlayerArray(array) {
     })
 
     array.sort(function(a, b) { return b - a })
-    console.log(array)
 }
 
 function checkMultiples(array, val) {
@@ -325,18 +324,52 @@ let result = null;
     } else return false
 }
 
-function deleteObjectMultiples() {
+function reset() {
     if(Object.keys(multiple).length > 0) {
         for (const key in multiple) {
             delete multiple[key]
         }
     }
+    if(Object.keys(multiple4).length > 0) {
+        for (const key in multiple4) {
+            delete multiple4[key]
+        }
+    }
+    if(Object.keys(multiple3).length > 0) {
+        for (const key in multiple3) {
+            delete multiple3[key]
+        }
+    }
+    if(Object.keys(multiple2).length > 0) {
+        for (const key in multiple2) {
+            delete multiple2[key]
+        }
+    }
+    if(Object.keys(playerRankObject).length > 0) {
+        for (const key in playerRankObject) {
+            delete playerRankObject[key]
+        }
+    }
+    if(playerRank.length>0) {
+        playerRank.splice(0, playerRank.length)
+    }
+
 }
 
 function twoThreeFour() {
-    for (const key in tally) {
-        if (tally[key] === 4) {
-        multiple[`${key}`] = tally[key]
+    for (const key in multiple) {
+        if (multiple[key] === 4) {
+        multiple4[`${key}`] = multiple[key]
+        }
+    }
+    for (const key in multiple) {
+        if (multiple[key] === 3) {
+        multiple3[`${key}`] = multiple[key]
+        }
+    }
+    for (const key in multiple) {
+        if (multiple[key] === 2) {
+        multiple2[`${key}`] = multiple[key]
         }
     }
 
@@ -345,16 +378,6 @@ function twoThreeFour() {
 function checkRank() {
     let playerHand = []
     copyPlayerHand()
-    // console.log(checkFlush(copyPlayerArray))
-    // removeSuits(copyPlayerArray)
-    // sortPlayerArray(copyPlayerArray)
-    // console.log(checkStraight(copyPlayerArray))
-    // copyPlayerHand()
-    // removeSuits(copyPlayerArray)
-    // sortPlayerArray(copyPlayerArray)
-    // console.log(checkMultiples(copyPlayerArray, 4))
-    
-
 
     if (checkFlush(copyPlayerArray)) {
         removeSuits(copyPlayerArray)
@@ -362,22 +385,71 @@ function checkRank() {
         if(checkStraight(copyPlayerArray)) {
             if(copyPlayerArray[0] === 14) {
                 console.log("you have a royal flush")
-                player
+                playerRank.push(1)
+                playerRankObject["Royal Flush"] = 1
             } else {
                 console.log("you have a straight flush")
+                playerRank.push(2)
+                playerRankObject["Straight Flush"] = 2
             }
         }
     }
 
-    // copyPlayerHand()
-    // removeSuits(copyPlayerArray)
-    // sortPlayerArray(copyPlayerArray)
-    // checkMultiples(copyPlayerArray, 4)
-    // if(Object.keys(multiple).length>0) {
-    //     console.log("you have four of a kind")
-    // } else console.log("doesnt work")
-
-    // checkMultiples(copyPlayerArray, 3)
-    // console.log(checkMultiples(copyPlayerArray, 2)
+    copyPlayerHand()
+    removeSuits(copyPlayerArray)
+    sortPlayerArray(copyPlayerArray)
+    checkMultiples(copyPlayerArray, 4)
+    checkMultiples(copyPlayerArray, 3)
+    checkMultiples(copyPlayerArray, 2)
+    twoThreeFour()
     
+    if(Object.keys(multiple4).length>0) {
+        console.log("you have four of a kind")
+        playerRank.push(3)
+        playerRankObject["Four of a Kind"] = 3
+    } 
+
+    if(Object.keys(multiple3).length>1) {
+        console.log("you have full house")
+        playerRank.push(4)
+        playerRankObject["Full House"] = 4
+    } else if((Object.keys(multiple3).length>0) && (Object.keys(multiple2).length>0)) {
+        playerRankObject["Full House"] = 4
+    }
+
+    copyPlayerHand()
+    if(checkFlush(copyPlayerArray)) {
+        console.log("you have a flush")
+        playerRank.push(5)
+        playerRankObject["Flush"] = 5
+    }
+
+    removeSuits(copyPlayerArray)
+    sortPlayerArray(copyPlayerArray)
+    if(checkStraight(copyPlayerArray)) {
+        console.log("you have a straight")
+        playerRank.push(6)
+        playerRankObject["Straight"] = 6
+    }
+
+    if(Object.keys(multiple3).length>0) {
+        console.log("you have three of a kind")
+        playerRank.push(7)
+        playerRankObject["Three of a Kind"] = 7
+    } 
+
+    if(Object.keys(multiple2).length>1) {
+        console.log("you have a two pair")
+        playerRank.push(8)
+        playerRankObject["Two Pair"] = 8
+    } else if(Object.keys(multiple2).length=1) {
+        console.log("you have a pair")
+        playerRank.push(9)
+        playerRankObject["Pair"] = 9
+    } else {
+        console.log("you have a high card")
+        playerRank.push(10)
+        playerRankObject["High Card"] = 10
+    }
 } 
+
