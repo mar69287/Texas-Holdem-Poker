@@ -19,10 +19,13 @@ const playerName = document.getElementById("name")
 let playerMoney = 2000
 const bank = document.getElementById("bank")
 const user = document.getElementById("userName")
+const betting = document.getElementById("betting")
+const winnings = document.getElementById("winnings")
 raiseBtn.disabled = true;
 let betTotal = 0
 let bet = 200
 let moneyCounter = 0
+let potential = bet + betTotal
 
 generateDeck()
 shuffleDeck()
@@ -35,7 +38,9 @@ submitBtn.addEventListener("click", function(evt) {
         document.querySelector("form").style.zIndex = "-4"
     }
     user.innerHTML = name
-    bank.innerHTML = "$" + playerMoney
+    bank.innerHTML = "Bank: $" + playerMoney
+    betting.innerHTML = "Bet total: $" + betTotal
+    winnings.innerHTML = "Potential Winnings: $" + betTotal
 })
 
 checkBtn.addEventListener("click", function(evt) {
@@ -46,8 +51,10 @@ checkBtn.addEventListener("click", function(evt) {
 
     if(counter===1) {
         playerMoney = playerMoney - 100
-        bank.innerHTML = "$" + playerMoney
+        bank.innerHTML = "Bank: $" + playerMoney
         betTotal = 100
+        betting.innerHTML = "Bet total: $" + betTotal
+        winnings.innerHTML = "Potential Winning: $" + 200
         checkBtn.disabled = true;
         setTimeout(function() {
             checkBtn.disabled = false;
@@ -158,6 +165,8 @@ foldBtn.addEventListener("click", function(evt) {
         playerMoney = 2000
         bank.innerHTML = "$" + playerMoney
     }
+    betting.innerHTML = "Bet total: $" + 0
+    winnings.innerHTML = "Potential Winning: $" + 0
 });
 
 raiseBtn.addEventListener("click", function(evt){
@@ -166,6 +175,9 @@ raiseBtn.addEventListener("click", function(evt){
         playerMoney = playerMoney - bet
         bank.innerHTML = "$" + playerMoney
         betTotal = betTotal + bet
+        betting.innerHTML = "Bet total: $" + betTotal
+        potential = potential + bet * 2
+        winnings.innerHTML = "Potential Winnings: $" + potential  
         raiseBtn.disabled = true;
         if(playerMoney === 0) {
             raiseBtn.disabled = true;
