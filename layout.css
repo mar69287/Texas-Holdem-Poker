@@ -69,9 +69,8 @@ body {
     border: .4rem yellow solid;
     margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
-    cursor: pointer;
 }
 
 .outline {
@@ -88,12 +87,12 @@ body {
     margin: auto;
 }
 
-#winner {
+.winner {
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: -2;
+    z-index: 5;
     /* left: 0; */
     right: 350px;
     top: 130px;
@@ -164,12 +163,15 @@ body {
 .choices {
     position: absolute;
     z-index: 3;
-    right: 27%;
+    right: 23%;
     bottom: 12%;
-    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    /* margin: auto; */
 } 
 
 .choices > button {
+    margin: 10px;
     height: 6rem;
     width: 9rem;
     border-radius: 10px;
@@ -181,11 +183,16 @@ body {
     cursor: pointer;
 }
 
-.choices > button:first-child {
+#fold {
     background-color: rgb(235, 9, 9);
-    margin-right: 20px;
+    /* margin-right: 20px; */
 }
 
-.choices > button:last-child {
+#check {
     background-color: rgb(213, 179, 11);
+}
+
+#raise {
+    background-color: aqua;
+    /* margin-left: 20px; */
 }

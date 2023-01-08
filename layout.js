@@ -7,41 +7,78 @@ let multiple = {}; let multiple2 = {}; let multiple3 = {}; let multiple4 = {}
 let playerMultiple = {}; let playerMultiple2 = {}; let playerMultiple3 = {}; let playerMultiple4 = {}
 let dealerMultiple = {}; let dealerMultiple2 = {}; let dealerMultiple3 = {}; let dealerMultiple4 = {}
 let playerRankObject = {}; let playerObjectCopy = {}
+let playerHand = []; let dealerHand = []
 let winnerResult = false
 let faceVal = 1
 let counter = 0
+const checkBtn = document.getElementById("check")
+const foldBtn = document.getElementById("fold")
+const raiseBtn = document.getElementById("raise")
+raiseBtn.disabled = true;
 
 generateDeck()
 shuffleDeck()
 renderDeck()
 
-const checkBtn = document.getElementById("check")
 checkBtn.addEventListener("click", function(evt) {
     counter++
+    checkBtn.innerHTML = "CHECK"
+    foldBtn.innerHTML = "FOLD"
+    
 
     if(counter===1) {
+        checkBtn.disabled = true;
+        setTimeout(function() {
+            checkBtn.disabled = false;
+        }, 1500);
         for(let i = 4; i < 7; i++) {
-            const cardEl = document.createElement('div')
-            cardEl.className = 'card ' +  deck[i].face 
-            document.querySelector('.community-container').append(cardEl)
+            setTimeout(function() {
+                if (i===4) {
+                    const cardEl = document.createElement('div')
+                    cardEl.className = 'card ' +  deck[i].face 
+                    document.querySelector('.community-container').append(cardEl)
+                    raiseBtn.disabled = false;
+                }
+            }, 300); 
+            setTimeout(function() {
+                if (i===5) {
+                    const cardEl = document.createElement('div')
+                    cardEl.className = 'card ' +  deck[i].face 
+                    document.querySelector('.community-container').append(cardEl)
+                    raiseBtn.disabled = false;
+                }
+            }, 600);
+            setTimeout(function() {
+                if (i===6) {
+                    const cardEl = document.createElement('div')
+                    cardEl.className = 'card ' +  deck[i].face 
+                    document.querySelector('.community-container').append(cardEl)
+                    raiseBtn.disabled = false;
+                }
+            }, 1200);      
         }
     }
     
     if((counter > 1) && (counter < 4)) {
+        checkBtn.disabled = true;
+        setTimeout(function() {
+            checkBtn.disabled = false;
+        }, 1500);
         const cardEl = document.createElement('div')
         cardEl.className = 'card ' + deck[counter + 5].face
         document.querySelector('.community-container').append(cardEl)
     }
 
     if(counter === 4) {
-        document.getElementById("check").disabled = true;
+        checkBtn.disabled = true;
+        raiseBtn.disabled = true;
         counter = 0
         for(i = 0; i < 2; i++) {
             const cards = document.querySelectorAll(".back") 
             cards.forEach(function(card) {
-            card.classList.remove("back")
-            card.classList.add(deck[i + faceVal].face)
-            faceVal = 3
+                card.classList.remove("back")
+                card.classList.add(deck[i + faceVal].face)
+                faceVal = 3
             })
         }
 
@@ -54,15 +91,25 @@ checkBtn.addEventListener("click", function(evt) {
         checkPlayerRank(dealerArray)
         copydealerMultiples()
         checkWinner(playerObjectCopy, playerRankObject)
+        foldBtn.innerHTML = "AGAIN?"
     }
 
 });
 
-
-const foldBtn = document.getElementById("fold")
 foldBtn.addEventListener("click", function(evt) {
+    raiseBtn.disabled = true;
+    foldBtn.innerHTML = "FOLD"
+    checkBtn.innerHTML = "PLAY"
+    foldBtn.disabled = true;
+    setTimeout(function() {
+        foldBtn.disabled = false;
+    }, 1500);
+    if (checkBtn.innerHTML === "PLAY") {
+        foldBtn.innerHTML = "RESET"
+    }
     if(winnerResult === true) {
-        document.getElementById("winner").style.zIndex = "-2"
+        // document.getElementById("winner").style.zIndex = "-2"
+        document.getElementById("winner").classList.remove("winner")
         winnerResult = false
     }
     counter = 0
@@ -81,6 +128,10 @@ foldBtn.addEventListener("click", function(evt) {
     deletePlayerMultiples()
     deleteDealerMultiples()
 });
+
+raiseBtn.addEventListener("click", function(evt){
+    console.log("hello")
+})
 
 function generateDeck() {
     suits.forEach(suit => {
@@ -238,7 +289,7 @@ function checkFlush(array) {
         if (array[i].includes("s")) {
             spadeCounter++
             if (spadeCounter >= 5) {
-                array.filter(function(spade) { return spade.includes("s")})
+                array = array.filter(function(spade) { return spade.includes("s")})
                 return true
             }
         }
@@ -247,7 +298,7 @@ function checkFlush(array) {
         if (array[i].includes("c")) {
             clubCounter++
             if (clubCounter >= 5) {
-                array.filter(function(club) { return club.includes("c")})
+                array = array.filter(function(club) { return club.includes("c")})
                 return true
             }
         }
@@ -256,7 +307,7 @@ function checkFlush(array) {
         if (array[i].includes("h")) {
             heartCounter++
             if (heartCounter >= 5) {
-                array.filter(function(heart) { return heart.includes("h")})
+                array = array.filter(function(heart) { return heart.includes("h")})
                 return true
             }
         }    
@@ -266,7 +317,7 @@ function checkFlush(array) {
         if (array[i].includes("d")) {
             diamondCounter++
             if (diamondCounter >= 5) {
-                array.filter(function(diamond) { return diamond.includes("d")})
+                array = array.filter(function(diamond) { return diamond.includes("d")})
                 return true
             }     
         }   
@@ -493,9 +544,9 @@ function checkPlayerRank(checkArray) {
     copyPlayerHand(checkArray)
 
     if (checkFlush(copyPlayerArray)) {
-        removeSuits(playerHand)
-        sortPlayerArray(playerHand)
-        if(checkStraight(playerHand)) {
+        removeSuits(copyPlayerArray)
+        sortPlayerArray(copyPlayerArray)
+        if(checkStraight(copyPlayerArray)) {
             if(playerHand[0] === 14) {
                 playerRankObject["Royal Flush"] = 1
             } else {
@@ -552,7 +603,8 @@ function checkWinner(playerObj, dealerObj) {
     const dealerRank = Object.keys(dealerObj)[0]
     winnerResult = true
     const div = document.getElementById("winner")
-    div.style.zIndex = "5";
+    div.classList.add("winner")
+    // div.style.zIndex = "5";
 
     if(Object.values(playerObj)[0] < Object.values(dealerObj)[0]) {
         div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
@@ -578,12 +630,15 @@ function tiebreaker(playerObj, dealerObj) {
         sortPlayerArray(playerArray)
         removeSuits(dealerArray)
         sortPlayerArray(dealerArray)
-        if(playerArray[0] > dealerArray[0]) {
-            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater High Card`
-        }else if(playerArray[0] < dealerArray[0]) {
-            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater High Card`
-        } else {
-            return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same High Card`
+        for (let i = 0; i < 5; i++) {
+            if(playerArray[i] > dealerArray[i]) {
+                return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater High Cards`
+            }else if(playerArray[i] < dealerArray[i]) {
+                return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater High Cards`
+            }
+            if(i === 4) {
+                return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Hand`
+            }
         }
     }else if(Object.values(playerObj)[0] === 9) {
         if(playerKey === dealerKey) {
@@ -593,56 +648,167 @@ function tiebreaker(playerObj, dealerObj) {
             sortPlayerArray(playerArray)
             removeSuits(dealerArray)
             sortPlayerArray(dealerArray)
-            let playerResult = false;
-            let dealerResult = false;
-            if(playerHigh !== playerArray[0]) {
-                playerResult = true
-            }
-            if(dealerHigh !== dealerArray[0]) {
-                dealerResult = true
-            }
-            if(dealerResult && playerResult) {
-                if(dealerArray[0] > playerArray[0]) {
-                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer also has Greater Kicker`
-                }else if(dealerArray[0] < playerArray[0]) {
-                    return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`  + "<br/>" + `Player also has Greater Kicker`
-                }else {
-                    return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Pair with Same High Kicker`
+            playerArray = playerArray.filter(function(value){return (value !== playerKey)})
+            dealerArray = dealerArray.filter(function(value){return (value !== dealerKey)})
+            for (let i = 0; i < 3; i++) {
+                if(playerArray[i] > dealerArray[i]) {
+                    return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Same Pair plus Greater High Card`
+                }else if(playerArray[i] < dealerArray[i]) {
+                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Same pair plus Greater High Card`
                 }
-            }else {
-                if(dealerArray[2] > playerArray[2]) {
-                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer also has Greater Kicker`
-                }else if(dealerArray[2] < playerArray[2]) {
-                    return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`  + "<br/>" + `Player also has Greater Kicker`
-                }else {
-                    return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both also have Same Kicker`
+                if(i === 2) {
+                    return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Pair and Kickers`
                 }
-                
-            } 
+            }
         } else if(playerKey > dealerKey) {
             div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Higher pair`
         } else {
             return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Higher pair`
         }
-    }
-    else if(Object.values(playerObj)[0] === 8) {
+    }else if(Object.values(playerObj)[0] === 8) {
         const playerHigh = parseInt(Object.keys(playerMultiple2).pop(), 10)
         const dealerHigh = parseInt(Object.keys(dealerMultiple2).pop(), 10)
-        const playerHigh2 = parseInt(Object.keys(playerMultiple2)[dealerMultiple2.length-2], 10)
-        const dealerHigh2 = parseInt(Object.keys(dealerMultiple2)[dealerMultiple2.length-2], 10)
+        const playerHigh2 = parseInt(Object.keys(playerMultiple2)[Object.keys(playerMultiple2).length-2], 10)
+        const dealerHigh2 = parseInt(Object.keys(dealerMultiple2)[Object.keys(dealerMultiple2).length-2], 10)
         
         if(playerHigh > dealerHigh) {
-            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Pairs`
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater First Pair`
         }else if(playerHigh < dealerHigh) {
-            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater pair`
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater First Pair`
         }else {
-            if (playerHigh2 > dealerHigh2) {s
+            if (playerHigh2 > dealerHigh2) {
                 return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater 2nd Pair`
             }else  if (playerHigh2 < dealerHigh2) {
                 return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater 2nd Pair`
+            }else {
+                removeSuits(playerArray)
+                sortPlayerArray(playerArray)
+                playerArray = playerArray.filter(function(value){return (value !== playerHigh2)})
+                playerArray = playerArray.filter(function(value){return (value !== playerHigh)})
+                removeSuits(dealerArray)
+                sortPlayerArray(dealerArray)
+                dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh2)})
+                dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh)})
+                if (playerArray[0] > dealerArray[0]) {
+                    return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Kicker`
+                } else if (playerArray[0] < dealerArray[0]) {
+                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Kicker`
+                } else {
+                    return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both also have Same Kicker`
+                }
             }
         }
          
-     }
+    }else if(Object.values(playerObj)[0] === 7) {
+        const playerHigh = parseInt(Object.keys(playerMultiple3)[0], 10)
+        const dealerHigh = parseInt(Object.keys(dealerMultiple3)[0], 10)
+        if (playerHigh > dealerHigh) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Higher Three of a Kind`
+        }else if (playerHigh < dealerHigh) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Higher Three of a Kind`
+        } else {
+            removeSuits(playerArray)
+            sortPlayerArray(playerArray)
+            removeSuits(dealerArray)
+            sortPlayerArray(dealerArray)
+            playerArray = playerArray.filter(function(value){return (value !== playerHigh)})
+            dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh)})
+            if (playerArray[0] > dealerArray[0]) {
+                return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Kicker`
+            } else if (playerArray[0] < dealerArray[0]) {
+                return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Kicker`
+            } else {
+                if (playerArray[1] > dealerArray[1]) {
+                    return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater 2nd Kicker`
+                } else if (playerArray[1] < dealerArray[1]) {
+                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater 2nd Kicker`
+                }else {
+                    return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both also have Same Kickers`
+                }
+            }
+        }
+    }else if(Object.values(playerObj)[0] === 6) {
+        removeSuits(playerArray)
+        sortPlayerArray(playerArray)
+        checkStraight(playerArray)
+        removeSuits(dealerArray)
+        sortPlayerArray(dealerArray)
+        checkStraight(dealerArray) 
+        if (playerArray[0] > dealerArray[0]) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Straight`
+        }else if (playerArray[0] < dealerArray[0]) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Straight`            
+        } else {
+            return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both also have Same Straight`
+        }
+    }else if(Object.values(playerObj)[0] === 5) {
+        checkFlush(playerArray)
+        removeSuits(playerArray)
+        sortPlayerArray(playerArray)
+        checkFlush(dealerArray)
+        removeSuits(dealerArray)
+        sortPlayerArray(dealerArray)
+        if (playerHand[0] > dealerHand[0]) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Flush`
+        }else if (playerHand[0] < dealerHand[0]) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Flush`
+        } else {
+            return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Flush`
+        }
+    }else if(Object.values(playerObj)[0] === 4) {
+        const playerKey3 = parseInt(Object.keys(playerMultiple3)[0], 10)
+        const dealerKey3 = parseInt(Object.keys(dealerMultiple3)[0], 10)
+        if (playerKey3 > dealerKey3) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Full House`
+        }else if (playerKey3 < dealerKey3) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Full House`
+        }else {
+            if (playerKey > dealerKey) {
+                return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Full House`
+            }else if (playerKey < dealerKey) {
+                return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Full House`
+            }else {
+                return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Full House`
+            }
+        }
+    }else if(Object.values(playerObj)[0] === 3) {
+        const playerKey4 = parseInt(Object.keys(playerMultiple4)[0], 10)
+        const dealerKey4 = parseInt(Object.keys(dealerMultiple4)[0], 10)
+        if (playerKey4 > dealerKey4) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Four of a Kind`
+        }else if (playerKey4 < dealerKey4) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Four of a Kind`
+        }else {
+            removeSuits(playerArray)
+            sortPlayerArray(playerArray)
+            removeSuits(dealerArray)
+            sortPlayerArray(dealerArray)
+            playerArray = playerArray.filter(function(value){return (value !== playerKey4)})
+            dealerArray = dealerArray.filter(function(value){return (value !== dealerKey4)})
+            if(playerArray[0] > dealerArray[0]) {
+                return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Four of a Kind plus Greater High Card`
+            }else if(playerArray[0] < dealerArray[0]) {
+                return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Four of a Kind plus Greater High Card`
+            }else {
+                return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Four of a Kind`
+            }
+        }
+    }else if(Object.values(playerObj)[0] === 2) {
+        checkFlush(playerArray)
+        removeSuits(playerArray)
+        sortPlayerArray(playerArray)
+        checkStraight(playerArray)
+        checkFlush(dealerArray)
+        removeSuits(dealerArray)
+        sortPlayerArray(dealerArray)
+        checkStraight(dealerArray)
+        if(playerArray[0] > dealerArray[0]) {
+            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater Straight Flush`
+        }else if(playerArray[0] < dealerArray[0]) {
+            return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Straight Flush`
+        }else {
+            return div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Both have Same Straight`
+        }
+    }
 
 }
