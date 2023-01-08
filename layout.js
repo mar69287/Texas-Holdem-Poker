@@ -14,11 +14,26 @@ let counter = 0
 const checkBtn = document.getElementById("check")
 const foldBtn = document.getElementById("fold")
 const raiseBtn = document.getElementById("raise")
+const submitBtn = document.getElementById("submit")
+const playerName = document.getElementById("name")
+let playerMoney = 1000
+const bank = document.getElementById("bank")
+const user = document.getElementById("userName")
 raiseBtn.disabled = true;
 
 generateDeck()
 shuffleDeck()
 renderDeck()
+
+submitBtn.addEventListener("click", function(evt) {
+    var name = playerName.value
+    if (name !== "") {
+        evt.preventDefault()
+        document.querySelector("form").style.zIndex = "-4"
+    }
+    user.innerHTML = name
+    bank.innerHTML = "$" + playerMoney
+})
 
 checkBtn.addEventListener("click", function(evt) {
     counter++

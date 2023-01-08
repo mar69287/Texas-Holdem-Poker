@@ -16,7 +16,6 @@
     <script src="./layout.js" defer></script>
   </head>
   <body>
-    <h1 id="title">Texas Hold'em Poker</h1>
     <div class="board">
       <section class="outer-table">
         <section class="table">
@@ -27,8 +26,8 @@
           <section id="player"></section>
         </section>
         <div id="user">
-          <div class="name">Marco</div>
-          <div class="bank">Bank</div>
+          <div id="userName"></div>
+          <div id="bank"></div>
         </div>
       </section>
     </div>
@@ -38,5 +37,13 @@
       <button id="check">PLAY</button>
       <button id="raise">RAISE</button>
     </div>
+    <form class="splash screen">
+      <h1 id="title">Texas Hold'em Poker</h1>
+      <h2>Welcome!</h2>
+      <div id="info">
+        <input id="name" type="text" placeholder="Name/Username" required />
+      </div>
+      <button id="submit" type="submit">Enter</button>
+    </form>
   </body>
 </html>
