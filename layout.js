@@ -33,11 +33,17 @@ renderDeck()
 
 submitBtn.addEventListener("click", function(evt) {
     var name = playerName.value
-    if (name !== "") {
+    if (name.length > 12) {
+        evt.preventDefault()
+        const error = document.getElementById("error")
+        error.classList.add("error")
+        error.innerHTML = "Name must be less than 12 characters"
+    }else if (name !== "") {
         evt.preventDefault()
         document.querySelector("form").style.zIndex = "-4"
+        user.innerHTML = name
     }
-    user.innerHTML = name
+    // user.innerHTML = name
     bank.innerHTML = "Bank: $" + playerMoney
     betting.innerHTML = "Bet total: $" + betTotal
     winnings.innerHTML = "Potential Winnings: $" + betTotal
