@@ -167,6 +167,8 @@ foldBtn.addEventListener("click", function(evt) {
     }
     betting.innerHTML = "Bet total: $" + 0
     winnings.innerHTML = "Potential Winning: $" + 0
+    const div = document.getElementById("winner")
+    div.innerHTML = ""
 });
 
 raiseBtn.addEventListener("click", function(evt){
@@ -176,7 +178,7 @@ raiseBtn.addEventListener("click", function(evt){
         bank.innerHTML = "$" + playerMoney
         betTotal = betTotal + bet
         betting.innerHTML = "Bet total: $" + betTotal
-        potential = potential + bet * 2
+        potential = betTotal * 2
         winnings.innerHTML = "Potential Winnings: $" + potential  
         raiseBtn.disabled = true;
         if(playerMoney === 0) {
