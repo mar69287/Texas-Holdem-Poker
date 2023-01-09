@@ -75,6 +75,30 @@ body {
     align-items: center;
 }
 
+.community-container > div  {
+    width: 13%;
+    height: 85%;
+    background-color: white;
+    border-radius: 10px;
+    border: black solid .2rem;
+    margin: auto;
+}
+
+/* .test {
+    animation: dealing 5s ease-in;
+}
+
+@keyframes dealing {
+    0% {
+        transform: translateX(-50%);
+        transform: translateY(-50%);
+    }
+    100% {
+        transform: translateX(0%);
+        transform: translateY(0%);
+    }
+} */
+
 .outline {
     position: absolute;
     z-index: 3;
@@ -102,21 +126,12 @@ body {
     width: 25%;
     height: 25%;
     border-radius: 30px;
-    border: silver solid 5px;
-    background-color: goldenrod;
+    /* border: silver solid 5px; */
+    /* background-color: goldenrod; */
     margin: auto;
     font-size: 30px;
     text-align: center;
     color: black;
-}
-
-.community-container > div {
-    width: 13%;
-    height: 85%;
-    background-color: white;
-    border-radius: 10px;
-    border: black solid .2rem;
-    margin: auto;
 }
 
 #dealer, #player {
@@ -324,3 +339,87 @@ h2 {
     box-sizing: border-box;
     margin: 2px;
 }
+
+/* #container {
+    position: absolute;
+    left: 0;
+    right: 4%;
+    top: 12%;
+    z-index: -5;
+    height: 30%;
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.result{
+     position: absolute;
+    z-index: 10; 
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 25%;
+    height: 55%;
+    width: 45%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    background: white; 
+    transition: left 500ms ease-out;
+}
+
+#final {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 24%;
+    height: 55%;
+    width: 45%;
+    background: #333;
+    color: rgb(233, 229, 229);
+    font-size: 2rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8); 
+    transition: right 500ms ease-out;
+    text-align: center;
+}
+
+.winner:hover .game {
+    left: 41%;
+}
+
+.winner:hover #final {
+    right: 47%;
+}
+
+#pokerHand {
+    height: 40%;
+    width: 100%;
+    text-align: center;
+    padding: 2px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#draw {
+    background: rgb(77, 204, 247);
+    height: 60%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+} 

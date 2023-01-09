@@ -27,6 +27,7 @@ let bet = 200
 let moneyCounter = 0
 let potential = bet + betTotal
 
+
 generateDeck()
 shuffleDeck()
 renderDeck()
@@ -89,7 +90,9 @@ checkBtn.addEventListener("click", function(evt) {
                     document.querySelector('.community-container').append(cardEl)
                     raiseBtn.disabled = false;
                 }
-            }, 1200);      
+            }, 1200);   
+            
+            // animate()
         }
     }
     
@@ -142,7 +145,7 @@ foldBtn.addEventListener("click", function(evt) {
         foldBtn.innerHTML = "RESET"
     }
     if(winnerResult === true) {
-        // document.getElementById("winner").style.zIndex = "-2"
+        // document.getElementById("container").style.zIndex = "-4"
         document.getElementById("winner").classList.remove("winner")
         winnerResult = false
     }
@@ -172,9 +175,17 @@ foldBtn.addEventListener("click", function(evt) {
         bank.innerHTML = "$" + playerMoney
     }
     betting.innerHTML = "Bet total: $" + 0
-    winnings.innerHTML = "Potential Winning: $" + 0
-    const div = document.getElementById("winner")
-    div.innerHTML = ""
+    winnings.innerHTML = "Potential Winnings: $" + 0
+    // const div = document.getElementById("winner")
+    // div.innerHTML = ""
+    const draw = document.getElementById("draw")
+    const result = document.getElementById("final")
+    const hands = document.getElementById("pokerHand")
+    result.innerHTML = ""
+    hands.innerHTML = ""
+    draw.innerHTML = ""
+    draw.style.height = "60%"
+    draw.style.width = "100%"
 });
 
 raiseBtn.addEventListener("click", function(evt){
@@ -200,6 +211,19 @@ raiseBtn.addEventListener("click", function(evt){
     }
 })
 
+// function animate() {
+//     const card = document.querySelector(".community-container")
+//     const child = card.children
+//     setTimeout(function() {
+//         child.forEach(function(card) {
+//             card.classList.add("test")
+//         })
+//     }, 1000)
+//     setTimeout(function() {
+//         card.classList.remove(".test")
+//     }, 2000)
+// }
+
 function generateDeck() {
     suits.forEach(suit => {
         faces.forEach(face => {
@@ -221,19 +245,17 @@ function shuffleDeck() {
 }
 
 function renderDeck() {
-    
+
     setTimeout(function() {
         const cardEl = document.createElement('div')
         cardEl.className = 'card ' + deck[0].face
         document.querySelector("#player").append(cardEl)
     }, 300)
 
-    
     setTimeout(function() {
         const cardEl = document.createElement('div')
         cardEl.className = 'card back'
         document.querySelector('#dealer').append(cardEl)
-        
     }, 600)
 
     setTimeout(function() {
@@ -247,6 +269,7 @@ function renderDeck() {
         cardEl.className = 'card back' 
         document.querySelector('#dealer').append(cardEl)
     }, 1500)
+
 
 }
 
@@ -672,16 +695,25 @@ function checkWinner(playerObj, dealerObj) {
     const div = document.getElementById("winner")
     div.classList.add("winner")
     // div.style.zIndex = "5";
+    const expl = document.getElementById("draw")
 
     if(Object.values(playerObj)[0] < Object.values(dealerObj)[0]) {
         playerMoney = playerMoney + betTotal*2
         bank.innerHTML = "$" + playerMoney
-        div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+        playerWins(playerObj, dealerObj)
+        expl.innerHTML = "Player has higher Rank"
+        // div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
     } else if(Object.values(playerObj)[0] > Object.values(dealerObj)[0]) {
-        div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+        dealerWins(playerObj, dealerObj)
+        expl.innerHTML = "Dealer has higher Rank"
+        // div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
     } else if(Object.values(playerObj)[0] === Object.values(dealerObj)[0]) {
-        div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
-        tiebreaker(playerObj, dealerObj)
+        const draw = document.getElementById("draw")
+        draw.style.height = "0%"
+        draw.style.width = "0%"
+        tie(playerObj, dealerObj)
+        // div.innerHTML = `Draw!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}`
+        // tiebreaker(playerObj, dealerObj)
     }
     
 }
@@ -930,4 +962,33 @@ function tiebreaker(playerObj, dealerObj) {
         }
     }
 
+}
+
+function playerWins(playerObj, dealerObj) {
+    const playerRank = Object.keys(playerObj)[0]
+    const dealerRank = Object.keys(dealerObj)[0]
+    const result = document.getElementById("final")
+    const hands = document.getElementById("pokerHand")
+    // const draw = document.getElementById("draw")
+    result.innerHTML = "You Win!"
+    hands.innerHTML = `Player: ${playerRank}` + "<br/>" +  `Dealer: ${dealerRank}`
+}
+
+function dealerWins(playerObj, dealerObj) {
+    const playerRank = Object.keys(playerObj)[0]
+    const dealerRank = Object.keys(dealerObj)[0]
+    const result = document.getElementById("final")
+    const hands = document.getElementById("pokerHand")
+    // const draw = document.getElementById("draw")
+    result.innerHTML = "Dealer Won!"
+    hands.innerHTML = `Player: ${playerRank}` + "<br/>" +  `Dealer: ${dealerRank}` 
+}
+
+function tie(playerObj, dealerObj) {
+    const playerRank = Object.keys(playerObj)[0]
+    const dealerRank = Object.keys(dealerObj)[0]
+    const result = document.getElementById("final")
+    const hands = document.getElementById("pokerHand")
+    result.innerHTML = "Draw!"
+    hands.innerHTML = `Player: ${playerRank}` + "<br/>" +  `Dealer: ${dealerRank}` 
 }
