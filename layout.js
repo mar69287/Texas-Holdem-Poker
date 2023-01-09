@@ -415,6 +415,52 @@ function checkFlush(array) {
     return false
 }
 
+function createFlush(array) {
+    
+    let spadeCounter = 0;
+    let clubCounter = 0;
+    let heartCounter = 0;
+    let diamondCounter = 0;
+
+    for (let i = 0; i < 7; i++) {
+        if (array[i].includes("s")) {
+            spadeCounter++
+            if (spadeCounter >= 5) {
+                array = array.filter(function(spade) { return spade.includes("s")})
+                return array
+            }
+        }
+    }
+    for (let i = 0; i < 7; i++) {
+        if (array[i].includes("c")) {
+            clubCounter++
+            if (clubCounter >= 5) {
+                array = array.filter(function(club) { return club.includes("c")})
+                return array
+            }
+        }
+    }
+    for (let i = 0; i < 7; i++) {
+        if (array[i].includes("h")) {
+            heartCounter++
+            if (heartCounter >= 5) {
+                array = array.filter(function(heart) { return heart.includes("h")})
+                return array
+            }
+        }    
+    }
+
+    for (let i = 0; i < 7; i++) {
+        if (array[i].includes("d")) {
+            diamondCounter++
+            if (diamondCounter >= 5) {
+                array = array.filter(function(diamond) { return diamond.includes("d")})
+                return array
+            }     
+        }   
+    }
+}
+
 function removeSuits(array) {
     array.forEach(function(value,idx) {
         array[idx] = value.substring(1, array.length)
@@ -634,6 +680,7 @@ function checkPlayerRank(checkArray) {
     copyPlayerHand(checkArray)
 
     if (checkFlush(copyPlayerArray)) {
+        createFlush(copyPlayerArray)
         removeSuits(copyPlayerArray)
         sortPlayerArray(copyPlayerArray)
         if(checkStraight(copyPlayerArray)) {
@@ -722,6 +769,7 @@ function tiebreaker(playerObj, dealerObj) {
     const playerKey = parseInt(Object.keys(playerMultiple2)[0], 10)
     const dealerKey = parseInt(Object.keys(dealerMultiple2)[0], 10)
     const expl = document.getElementById("draw")
+    potential = betTotal * 2
 
     if(Object.values(playerObj)[0] === 10) {
         removeSuits(playerArray)
@@ -730,7 +778,7 @@ function tiebreaker(playerObj, dealerObj) {
         sortPlayerArray(dealerArray)
         for (let i = 0; i < 5; i++) {
             if(playerArray[i] > dealerArray[i]) {
-                playerMoney = playerMoney + betTotal*2
+                playerMoney = playerMoney + potential
                 bank.innerHTML = "$" + playerMoney
                 playerWins(playerObj, dealerObj)
                 expl.innerHTML = "Player has Greater High Cards"
@@ -759,7 +807,7 @@ function tiebreaker(playerObj, dealerObj) {
             dealerArray = dealerArray.filter(function(value){return (value !== dealerKey)})
             for (let i = 0; i < 3; i++) {
                 if(playerArray[i] > dealerArray[i]) {
-                    playerMoney = playerMoney + betTotal*2
+                    playerMoney = playerMoney + potential
                     bank.innerHTML = "$" + playerMoney
                     playerWins(playerObj, dealerObj)
                     expl.innerHTML = "Player has Same Pair, but Greater High Card"
@@ -768,8 +816,7 @@ function tiebreaker(playerObj, dealerObj) {
                     dealerWins(playerObj, dealerObj)
                     expl.innerHTML = "Dealer has Same Pair, but Greater High Card"    
                     // return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Same pair plus Greater High Card`
-                }
-                if(i === 2) {
+                }else if(i === 2) {
                     playerMoney = playerMoney + betTotal
                     bank.innerHTML = "$" + playerMoney
                     tie(playerObj, dealerObj)
@@ -778,7 +825,7 @@ function tiebreaker(playerObj, dealerObj) {
                 }
             }
         } else if(playerKey > dealerKey) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has higher Pair"
@@ -795,18 +842,18 @@ function tiebreaker(playerObj, dealerObj) {
         const dealerHigh2 = parseInt(Object.keys(dealerMultiple2)[Object.keys(dealerMultiple2).length-2], 10)
         
         if(playerHigh > dealerHigh) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has Greater First Pair"
-            return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater First Pair`
+            // return div.innerHTML = `Player Wins!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Player has Greater First Pair`
         }else if(playerHigh < dealerHigh) {
             dealerWins(playerObj, dealerObj)
             expl.innerHTML = "Dealer has Greater First Pair"
             // return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater First Pair`
         }else {
             if (playerHigh2 > dealerHigh2) {
-                playerMoney = playerMoney + betTotal*2
+                playerMoney = playerMoney + potential
                 bank.innerHTML = "$" + playerMoney
                 playerWins(playerObj, dealerObj)
                 expl.innerHTML = "Player has Greater 2nd Pair"
@@ -825,7 +872,7 @@ function tiebreaker(playerObj, dealerObj) {
                 dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh2)})
                 dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh)})
                 if (playerArray[0] > dealerArray[0]) {
-                    playerMoney = playerMoney + betTotal*2
+                    playerMoney = playerMoney + potential
                     bank.innerHTML = "$" + playerMoney
                     playerWins(playerObj, dealerObj)
                     expl.innerHTML = "Player has Greater KIcker"
@@ -833,7 +880,7 @@ function tiebreaker(playerObj, dealerObj) {
                 } else if (playerArray[0] < dealerArray[0]) {
                     dealerWins(playerObj, dealerObj)
                     expl.innerHTML = "Dealer has Greater Kicker"
-                    return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Kicker`
+                    // return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Kicker`
                 } else {
                     playerMoney = playerMoney + betTotal
                     bank.innerHTML = "$" + playerMoney
@@ -848,7 +895,7 @@ function tiebreaker(playerObj, dealerObj) {
         const playerHigh = parseInt(Object.keys(playerMultiple3)[0], 10)
         const dealerHigh = parseInt(Object.keys(dealerMultiple3)[0], 10)
         if (playerHigh > dealerHigh) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has higher Three of a Kind"
@@ -865,7 +912,7 @@ function tiebreaker(playerObj, dealerObj) {
             playerArray = playerArray.filter(function(value){return (value !== playerHigh)})
             dealerArray = dealerArray.filter(function(value){return (value !== dealerHigh)})
             if (playerArray[0] > dealerArray[0]) {
-                playerMoney = playerMoney + betTotal*2
+                playerMoney = playerMoney + potential
                 bank.innerHTML = "$" + playerMoney
                 playerWins(playerObj, dealerObj)
                 expl.innerHTML = "Player has Greater Kicker"
@@ -876,7 +923,7 @@ function tiebreaker(playerObj, dealerObj) {
                 // return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Kicker`
             } else {
                 if (playerArray[1] > dealerArray[1]) {
-                    playerMoney = playerMoney + betTotal*2
+                    playerMoney = playerMoney + potential
                     bank.innerHTML = "$" + playerMoney
                     playerWins(playerObj, dealerObj)
                     expl.innerHTML = "Player has Greater 2nd Kicker"
@@ -902,7 +949,7 @@ function tiebreaker(playerObj, dealerObj) {
         sortPlayerArray(dealerArray)
         checkStraight(dealerArray) 
         if (playerArray[0] > dealerArray[0]) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has Greater Straight"
@@ -926,7 +973,7 @@ function tiebreaker(playerObj, dealerObj) {
         removeSuits(dealerArray)
         sortPlayerArray(dealerArray)
         if (playerHand[0] > dealerHand[0]) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has Greater Flush"
@@ -946,7 +993,7 @@ function tiebreaker(playerObj, dealerObj) {
         const playerKey3 = parseInt(Object.keys(playerMultiple3)[0], 10)
         const dealerKey3 = parseInt(Object.keys(dealerMultiple3)[0], 10)
         if (playerKey3 > dealerKey3) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has greater Full House"
@@ -957,7 +1004,7 @@ function tiebreaker(playerObj, dealerObj) {
             // return div.innerHTML = `Dealer Wins! Better luck next time!` + "<br/>" + `Player has: ${playerRank} and Dealer has: ${dealerRank}` + "<br/>" + `Dealer has Greater Full House`
         }else {
             if (playerKey > dealerKey) {
-                playerMoney = playerMoney + betTotal*2
+                playerMoney = playerMoney + potential
                 bank.innerHTML = "$" + playerMoney
                 playerWins(playerObj, dealerObj)
                 expl.innerHTML = "Player has greater Full House"
@@ -978,7 +1025,7 @@ function tiebreaker(playerObj, dealerObj) {
         const playerKey4 = parseInt(Object.keys(playerMultiple4)[0], 10)
         const dealerKey4 = parseInt(Object.keys(dealerMultiple4)[0], 10)
         if (playerKey4 > dealerKey4) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Dealer has greater Four of a Kind"
@@ -995,7 +1042,7 @@ function tiebreaker(playerObj, dealerObj) {
             playerArray = playerArray.filter(function(value){return (value !== playerKey4)})
             dealerArray = dealerArray.filter(function(value){return (value !== dealerKey4)})
             if(playerArray[0] > dealerArray[0]) {
-                playerMoney = playerMoney + betTotal*2
+                playerMoney = playerMoney + potential
                 bank.innerHTML = "$" + playerMoney
                 playerWins(playerObj, dealerObj)
                 expl.innerHTML = "Player has Four of a Kind plus Greater High Card"
@@ -1022,7 +1069,7 @@ function tiebreaker(playerObj, dealerObj) {
         sortPlayerArray(dealerArray)
         checkStraight(dealerArray)
         if(playerArray[0] > dealerArray[0]) {
-            playerMoney = playerMoney + betTotal*2
+            playerMoney = playerMoney + potential
             bank.innerHTML = "$" + playerMoney
             playerWins(playerObj, dealerObj)
             expl.innerHTML = "Player has Greater Straight Flush"
