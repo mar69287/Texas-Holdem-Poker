@@ -437,7 +437,7 @@ h2 {
     width: 100%;
     text-align: center;
     padding: 2px;
-    font-size: 1rem;
+    font-size: .9rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -449,7 +449,7 @@ h2 {
     width: 100%;
     text-align: center;
     display: flex;
-    font-size: 1rem;
+    font-size: .9rem;
     justify-content: center;
     align-items: center;
 }
@@ -528,4 +528,208 @@ h2 {
     background: white;
     border-radius: 1rem;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+    .table {
+        width: 95%;
+        height: 92%;
+    }
+
+    .outer-table {
+        width: 95%;
+    }
+
+    #userName {
+        font-size: 2rem;
+    }
+
+    .game {
+        height: 70%;
+        width: 50%;
+    }
+
+    #final {
+        height: 70%;
+        width: 50%;
+        right: 30%;
+        font-size: 1.7rem;
+    }
+
+    #pokerHand {
+        font-size: .7rem;
+    }
+
+    #draw {
+        font-size: .7rem;
+    }
+
+    .winner:hover .game {
+        left: 50%;
+    }
+
+    .choices {
+        height: 12%;
+        right: 20.5%;
+        bottom: 7%;
+    }
+
+    .choices>button {
+        margin: .3rem;
+        width: 32%;
+        font-size: 1rem;
+    }
+
+    #user {
+        bottom: 3.5%;
+        width: 17%;
+        left: 24%;
+    }
+
+    #user>div {
+        font-size: .7rem;
+    }
+
+    #title {
+        font-size: 4rem;
+        margin-bottom: 0;
+    }
+
+    #dealer,
+    #player,
+    .community-container {
+        height: 22%;
+    }
+
+    .community-container>div {
+        border: none;
+    }
+
+    .community-container {
+        border: .2rem yellow solid;
+        ;
+    }
+
+    .bets {
+        right: 19.5%;
+    }
+
+    .bets>button {
+        border: 0.2rem white dashed;
+        font-size: .7rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #customBtn {
+        font-size: .55rem;
+        text-align: center;
+    }
+
+    .slider::after {
+        font-size: 1rem;
+        right: -18%;
+        bottom: 7%;
+        color: black;
+    }
+
+    .slider::before {
+        font-size: 1rem;
+        left: -7%;
+        bottom: 7%;
+    }
+
+    #range-slider {
+        width: 16%;
+        right: 16.5%;
+        bottom: 31%;
+    }
+
+    .slider::-webkit-slider-thumb {
+        width: 1rem;
+        height: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+    .bets {
+        width: 17%;
+        right: 19%;
+    }
+
+    #range-slider {
+        width: 15%;
+        right: 5%;
+        bottom: 28%;
+    }
+
+    .slider::after {
+        right: -24%;
+        color: white;
+    }
+
+    .slider::before {
+        left: -8%;
+        color: white;
+    }
+
+    #user {
+        width: 17%;
+        bottom: 0;
+        left: 0;
+    }
+
+    #user>div {
+        font-size: .6rem;
+    }
+
+    .choices>button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .choices {
+        right: 3%;
+        bottom: 4%;
+    }
+
+    .table {
+        width: 95%;
+        height: 93%;
+        border: .8rem rgb(3, 67, 34) solid;
+    }
+
+    .outer-table {
+        width: 95%;
+        height: 90%;
+    }
+
+    .slider-thumb>p {
+        font-size: .9rem;
+    }
+
+    #customBets {
+        right: 4.5%;
+        bottom: 17%;
+    }
+
+    .slider-thumb {
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #value {
+        color: white;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #customBets {
+        height: 9%;
+    }
 }

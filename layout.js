@@ -66,8 +66,8 @@ checkBtn.addEventListener("click", function (evt) {
     checkBtn.innerHTML = "CHECK"
     foldBtn.innerHTML = "FOLD"
 
-
     if (counter === 1) {
+        raiseBtn.disabled = false;
         playerMoney = playerMoney - 100
         bank.innerHTML = "Bank: $" + playerMoney
         betTotal = 100
@@ -108,6 +108,7 @@ checkBtn.addEventListener("click", function (evt) {
     }
 
     if ((counter > 1) && (counter < 4)) {
+        raiseBtn.disabled = false;
         checkBtn.disabled = true;
         setTimeout(function () {
             checkBtn.disabled = false;
@@ -143,6 +144,9 @@ checkBtn.addEventListener("click", function (evt) {
     }
     rangeSlider.style.zIndex = -3;
     customBets.style.zIndex = -3;
+    if (playerMoney === 0) {
+        raiseBtn.disabled = true;
+    }
 
 });
 
@@ -166,7 +170,10 @@ foldBtn.addEventListener("click", function (evt) {
     moneyCounter = 0
     faceVal = 1
     betTotal = 0
-    bet = 200
+    bet = 0
+    // bet = 200
+    twoHundredCounter = 0
+    customCounter = 0
     const cards = document.querySelectorAll(".card")
     cards.forEach(card => card.remove())
     shuffleDeck()
@@ -202,43 +209,74 @@ foldBtn.addEventListener("click", function (evt) {
 raiseBtn.addEventListener("click", function (evt) {
     customBets.style.zIndex = 5;
     moneyCounter++
+    customCounter = 0
+    twoHundredCounter = 0
+    slider.max = playerMoney
     if (counter < 4) {
-        playerMoney = playerMoney - bet
-        bank.innerHTML = "$" + playerMoney
-        betTotal = betTotal + bet
-        betting.innerHTML = "Bet total: $" + betTotal
-        potential = betTotal * 2
-        winnings.innerHTML = "Potential Winnings: $" + potential
+        // playerMoney = playerMoney - bet
+        // bank.innerHTML = "$" + playerMoney
+        // betTotal = betTotal + bet
+        // betting.innerHTML = "Bet total: $" + betTotal
+        // potential = betTotal * 2
+        // winnings.innerHTML = "Potential Winnings: $" + potential
         raiseBtn.disabled = true;
         if (playerMoney === 0) {
             raiseBtn.disabled = true;
-        } else {
-            setTimeout(function () {
-                raiseBtn.disabled = false;
-            }, 1000);
+            // } else {
+            //     setTimeout(function () {
+            //         raiseBtn.disabled = false;
+            //     }, 1000);
+            // }
         }
+        // if (playerMoney <= 200) {
+        //     bet = playerMoney
+        // }
     }
-    if (playerMoney <= 200) {
-        bet = playerMoney
+
+    if (playerMoney <= 100) {
+        slider.step = 1
+        betBtn.disabled = true
     }
+
 })
 
 customBtn.addEventListener("click", function (evt) {
     rangeSlider.style.zIndex = 5;
-    slider.max = playerMoney
+    // slider.max = playerMoney
     customBtn.innerHTML = "BET"
+    raiseBtn.disabled = true
     if (customCounter === 1) {
+        customBtn.innerHTML = "CUSTOM"
         rangeSlider.style.zIndex = -3;
         customBets.style.zIndex = -3;
+        playerMoney = playerMoney - bet
+        bank.innerHTML = "Bank:$" + playerMoney
+        betTotal = betTotal + bet
+        betting.innerHTML = "Bet total: $" + betTotal
+        potential = betTotal * 2
+        winnings.innerHTML = "Potential Winnings: $" + potential
+        // raiseBtn.disabled = false
+    }
+
+    if (playerMoney === 0) {
+        raiseBtn.disabled = true;
     }
     customCounter++
-
 })
 
 betBtn.addEventListener("click", function (evt) {
-    rangeSlider.style.zIndex = -3;
     customBets.style.zIndex = -3;
-
+    bet = 200
+    playerMoney = playerMoney - bet
+    bank.innerHTML = "Bank: $" + playerMoney
+    betTotal = betTotal + bet
+    betting.innerHTML = "Bet total: $" + betTotal
+    potential = betTotal * 2
+    winnings.innerHTML = "Potential Winnings: $" + potential
+    // raiseBtn.disabled = false
+    if (playerMoney === 0) {
+        raiseBtn.disabled = true;
+    }
 })
 
 slider.oninput = function () {
