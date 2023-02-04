@@ -1,0 +1,52 @@
+
+body {
+  font-family: Open Sans;
+  /* font-size: 14px; */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bet > button {
+    position: absolute;
+  width: 25%;
+  height: 100%;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background: green;
+  border: 10px dashed rgb(199, 196, 196);
+  border-radius: 1500px;
+  padding-top: 10px;
+  margin: auto;
+  /* box-shadow: 0 0 20px rgba(0,0,0,0.5); */
+  /* margin: 2em auto; */
+  /* pointer-events: none; */
+}
+
+
+button:last-child {
+    font-size: .9rem;
+}
+
+.bet {
+    position: relative;
+    margin: auto;
+    /* left: 0; */
+    /* right: 10%; */
+    /* top: 0; */
+    /* bottom: 12%; */
+    border: red solid 2px;
+    /* background-color: red; */
+    height: 10%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* pointer-events: none; */
+}

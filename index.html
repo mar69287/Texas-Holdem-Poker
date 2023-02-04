@@ -40,11 +40,26 @@
         <div id="final"></div>
       </div>
     </div>
+
     <div class="choices">
       <button id="fold">RESET</button>
       <button id="check">PLAY</button>
       <button id="raise">RAISE</button>
     </div>
+
+    <div id="customBets" class="bets">
+      <button id="betBtn">200</button>
+      <button id="customBtn">CUSTOM</button>
+    </div>
+
+    <div id="range-slider" class="range-slider">
+      <div class="slider-thumb">
+          <p> Value: <span id="value"></span></p>
+        </div>
+      <input id="myslider" type="range" min="0" max="2000" step="100" value="0" class="slider">
+      <div class="progress"></div>
+    </div>
+
     <form class="splash screen">
       <h1 id="title">Texas Hold'em Poker</h1>
       <h2>Welcome!</h2>
@@ -55,14 +70,5 @@
       <button id="submit" type="submit">Enter</button>
     </form>
     <div id="userName"></div>
-    <!-- <div id="container">
-      <div class="result">
-        <div class="game">
-          <div id="pokerHand"></div>
-          <div id="draw"></div>
-        </div>
-        <div id="final"></div>
-      </div>
-    </div> -->
   </body>
 </html>
