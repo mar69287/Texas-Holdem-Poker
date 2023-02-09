@@ -13,15 +13,15 @@ https://mar69287.github.io/Texas-Holdem-Poker/
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 
-![image](https://user-images.githubusercontent.com/104735283/210905344-eb8bb90f-1ae1-40f5-982c-df4345ad3e8d.png)
+![image](https://user-images.githubusercontent.com/104735283/217909016-370cb629-77ee-4ac9-b9ea-6af8b7acb872.png)
 
-![image](https://user-images.githubusercontent.com/104735283/210909471-baa1e3d8-ca76-4765-8000-e3523e34d349.png)
+![image](https://user-images.githubusercontent.com/104735283/217909129-83400d41-0664-4800-be73-d7ee05fe255c.png)
+
+![image](https://user-images.githubusercontent.com/104735283/217909205-5bea2bd3-d1b7-4b98-b943-5b99c014b69f.png)
 
 ## End of Game
-![image](https://user-images.githubusercontent.com/104735283/211057305-d8f7089f-4aa5-4938-8b4c-0e3d5cea24dc.png)
+![image](https://user-images.githubusercontent.com/104735283/217909364-42c11740-137c-41bf-bc7b-d43b9c329e79.png)
 
 ## Next Steps
-* Finish tiebreaker for all ranks
-* Add bank and player betting
 * Organize code
 * Using classes 
